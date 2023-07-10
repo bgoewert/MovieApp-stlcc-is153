@@ -27,9 +27,22 @@ namespace MovieApp
         {
             InitializeComponent();
 
-            // Populate movie list.
+            // Add some placeholder reviews.
+            // Reviews are my own or from Roger Ebert. https://www.rogerebert.com/reviews/
+            movies[0].Reviews.Add(new Review("brennangoewert", 4.6, "I was not angry that I watched this. Very good stuff."));
+            movies[0].Reviews.Add(new Review("rogerebert", 4.2, "In form, \"12 Angry Men\" is a courtroom drama. In purpose, it's a crash course in those passages of the Constitution that promise defendants a fair trial and the presumption of innocence."));
+            movies[1].Reviews.Add(new Review("brennangoewert", 5, "The cinematography was mind blowing. They captured the feeling of outer space so well."));
+            movies[1].Reviews.Add(new Review("rogerebert", 4.7, "It was e. e. cummings, the poet, who said he'd rather learn from one bird how to sing than teach 10,000 stars how not to dance. I imagine cummings would not have enjoyed Stanley Kubrick's \"2001: A Space Odyssey,\" in which stars dance but birds do not sing."));
+            movies[2].Reviews.Add(new Review("brennangoewert", 3.6, "I don't understand French. But I was on edge the whole movie."));
+            movies[2].Reviews.Add(new Review("rogerebert", 4.5, "Francois Truffaut's \"The 400 Blows\" (1959) is one of the most intensely touching stories ever made about a young adolescent."));
+
             lstMovies.DataSource = movies;
             lstMovies.DisplayMember = "Title";
+
+            // Clear selected items on load.
+            // Unsure why there was an initial selection.
+            lstMovies.ClearSelected();
+            ClearMovieForm();
         }
 
         private void btnAddMovie_Click(object sender, EventArgs e)
@@ -71,7 +84,7 @@ namespace MovieApp
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
             // Enable inputs.
@@ -115,7 +128,7 @@ namespace MovieApp
                     // Otherwise, get rating.
                     if (movie.Rating != 0)
                     {
-                        rating = movie.Rating.ToString();
+                        rating = movie.Rating.ToString("f1");
                     }
 
                     // Populate inputs with selected movie details.
@@ -125,10 +138,29 @@ namespace MovieApp
                     txtDuration.Text = movie.Duration.ToString();
                     txtAvgRating.Text = rating;
                     txtDescription.Text = movie.Description;
+
+                    // Clear review list.
+                    txtReviews.Text = string.Empty;
+
+                    // Populate Reviews list.
+                    for (int i = 0; i < movie.Reviews.Count; i++)
+                    {
+                        txtReviews.Text += "\"" + movie.Reviews[i].Comment + "\"\r\n" + movie.Reviews[i].Username + " - " + movie.Reviews[i].Rating.ToString("f1");
+                        if (i != (movie.Reviews.Count - 1)) txtReviews.Text += "\r\n\r\n";
+                    }
                 }
-            } catch (Exception ex)
+                else
+                {
+                    ClearMovieForm();
+                    DisableMovieForm();
+                    txtReviews.Text = string.Empty;
+                    ClearReviewForm();
+
+                }
+            }
+            catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -188,7 +220,7 @@ namespace MovieApp
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
             // Disable the form once an action is performed.
@@ -254,5 +286,41 @@ namespace MovieApp
             lstMovies.DataSource = movies;
         }
 
+        private void ClearReviewForm()
+        {
+            txtUsername.Text = string.Empty;
+            txtUserRating.Text = string.Empty;
+            txtUserReview.Text = string.Empty;
+        }
+
+        private void btnAddReview_Click(object sender, EventArgs e)
+        {
+            // Get selected movie
+            Movie movie = movies[lstMovies.SelectedIndex];
+
+            try
+            {
+                // Parse rating
+                double rating;
+                double.TryParse(txtUserRating.Text, out rating);
+
+                // Add new review
+                movie.Reviews.Add(new Review(txtUsername.Text, rating, txtUserReview.Text));
+
+                // Add review to list.
+                txtReviews.Text += "\r\n\r\n";
+                txtReviews.Text += "\"" + txtUserReview.Text + "\"\r\n" + txtUsername.Text + " - " + rating.ToString("f1");
+
+                // Update new average rating.
+                txtAvgRating.Text = movie.Rating.ToString("f1");
+
+                ClearReviewForm();
+
+            } catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+        }
     }
 }

@@ -60,6 +60,7 @@
             lstMovies = new ListBox();
             label1 = new Label();
             panelReviews = new Panel();
+            txtReviews = new TextBox();
             btnAddReview = new Button();
             txtUserReview = new TextBox();
             lblUserReview = new Label();
@@ -67,7 +68,6 @@
             lblUserRating = new Label();
             txtUsername = new TextBox();
             lblName = new Label();
-            listView1 = new ListView();
             label2 = new Label();
             panelMovies.SuspendLayout();
             grpFilter.SuspendLayout();
@@ -256,6 +256,7 @@
             txtAvgRating.ReadOnly = true;
             txtAvgRating.Size = new Size(100, 23);
             txtAvgRating.TabIndex = 14;
+            txtAvgRating.TabStop = false;
             // 
             // lblAvgRating
             // 
@@ -389,6 +390,7 @@
             // panelReviews
             // 
             panelReviews.BorderStyle = BorderStyle.FixedSingle;
+            panelReviews.Controls.Add(txtReviews);
             panelReviews.Controls.Add(btnAddReview);
             panelReviews.Controls.Add(txtUserReview);
             panelReviews.Controls.Add(lblUserReview);
@@ -396,21 +398,31 @@
             panelReviews.Controls.Add(lblUserRating);
             panelReviews.Controls.Add(txtUsername);
             panelReviews.Controls.Add(lblName);
-            panelReviews.Controls.Add(listView1);
             panelReviews.Controls.Add(label2);
             panelReviews.Location = new Point(367, 12);
             panelReviews.Name = "panelReviews";
-            panelReviews.Size = new Size(329, 435);
+            panelReviews.Size = new Size(329, 458);
             panelReviews.TabIndex = 1;
+            // 
+            // txtReviews
+            // 
+            txtReviews.Location = new Point(17, 37);
+            txtReviews.Multiline = true;
+            txtReviews.Name = "txtReviews";
+            txtReviews.ReadOnly = true;
+            txtReviews.ScrollBars = ScrollBars.Vertical;
+            txtReviews.Size = new Size(294, 215);
+            txtReviews.TabIndex = 23;
             // 
             // btnAddReview
             // 
-            btnAddReview.Location = new Point(90, 394);
+            btnAddReview.Location = new Point(90, 413);
             btnAddReview.Name = "btnAddReview";
             btnAddReview.Size = new Size(75, 23);
             btnAddReview.TabIndex = 21;
             btnAddReview.Text = "Add New";
             btnAddReview.UseVisualStyleBackColor = true;
+            btnAddReview.Click += btnAddReview_Click;
             // 
             // txtUserReview
             // 
@@ -418,7 +430,7 @@
             txtUserReview.Multiline = true;
             txtUserReview.Name = "txtUserReview";
             txtUserReview.ScrollBars = ScrollBars.Vertical;
-            txtUserReview.Size = new Size(221, 60);
+            txtUserReview.Size = new Size(221, 79);
             txtUserReview.TabIndex = 20;
             // 
             // lblUserReview
@@ -461,14 +473,6 @@
             lblName.Size = new Size(60, 15);
             lblName.TabIndex = 3;
             lblName.Text = "Username";
-            // 
-            // listView1
-            // 
-            listView1.Location = new Point(17, 37);
-            listView1.Name = "listView1";
-            listView1.Size = new Size(294, 220);
-            listView1.TabIndex = 2;
-            listView1.UseCompatibleStateImageBehavior = false;
             // 
             // label2
             // 
@@ -524,7 +528,6 @@
         private Button btnSaveMovie;
         private TextBox txtUsername;
         private Label lblName;
-        private ListView listView1;
         private TextBox txtUserRating;
         private Label lblUserRating;
         private TextBox txtUserReview;
@@ -541,5 +544,6 @@
         private GroupBox grpFilter;
         private Button btnFilter;
         private Button btnFilterClear;
+        private TextBox txtReviews;
     }
 }
