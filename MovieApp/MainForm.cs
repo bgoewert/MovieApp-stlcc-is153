@@ -263,15 +263,24 @@ namespace MovieApp
             if (txtFilterRatingMax.Text != string.Empty && txtFilterRatingMin.Text == string.Empty) { MessageBox.Show("Min Rating Required"); return; }
 
             // Get filter values
-            int yearMin, yearMax, ratingMin, ratingMax;
+            int yearMin, yearMax;
+            double ratingMin, ratingMax;
             Int32.TryParse(txtFilterYearMin.Text, out yearMin);
             Int32.TryParse(txtFilterYearMax.Text, out yearMax);
-            Int32.TryParse(txtFilterRatingMin.Text, out ratingMin);
-            Int32.TryParse(txtFilterRatingMax.Text, out ratingMax);
+            double.TryParse(txtFilterRatingMin.Text, out ratingMin);
+            double.TryParse(txtFilterRatingMax.Text, out ratingMax);
 
             // Filter movies and display results
             // https://learn.microsoft.com/en-us/dotnet/api/system.linq.enumerable.where?view=net-7.0
-            BindingList<Movie> moviesFiltered = new BindingList<Movie>(movies.Where(m => (m.ReleaseYear > yearMin && m.ReleaseYear < yearMax) || (m.Rating < ratingMin && m.Rating > ratingMax)).ToList());
+            BindingList<Movie> moviesFiltered = new BindingList<Movie>();
+            if (txtFilterYearMin.Text != string.Empty || txtFilterRatingMin.Text != string.Empty)
+            {
+                moviesFiltered = new BindingList<Movie>(movies.Where(m => (m.ReleaseYear > yearMin && m.ReleaseYear < yearMax) || (m.Rating > ratingMin && m.Rating < ratingMax)).ToList());
+            }
+            if (txtFilterYearMin.Text != string.Empty && txtFilterRatingMin.Text != string.Empty)
+            {
+                moviesFiltered = new BindingList<Movie>(movies.Where(m => (m.ReleaseYear > yearMin && m.ReleaseYear < yearMax) && (m.Rating > ratingMin && m.Rating < ratingMax)).ToList());
+            }
 
             lstMovies.DataSource = moviesFiltered;
         }
