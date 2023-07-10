@@ -38,8 +38,8 @@
             lblFilterDate = new Label();
             txtFilterRatingMin = new TextBox();
             txtFilterRatingMax = new TextBox();
-            button1 = new Button();
-            textBox1 = new TextBox();
+            btnSearch = new Button();
+            txtSearch = new TextBox();
             btnCancelMovie = new Button();
             btnSaveMovie = new Button();
             txtDescription = new TextBox();
@@ -78,8 +78,8 @@
             // 
             panelMovies.BorderStyle = BorderStyle.FixedSingle;
             panelMovies.Controls.Add(grpFilter);
-            panelMovies.Controls.Add(button1);
-            panelMovies.Controls.Add(textBox1);
+            panelMovies.Controls.Add(btnSearch);
+            panelMovies.Controls.Add(txtSearch);
             panelMovies.Controls.Add(btnCancelMovie);
             panelMovies.Controls.Add(btnSaveMovie);
             panelMovies.Controls.Add(txtDescription);
@@ -126,7 +126,7 @@
             btnFilterClear.Location = new Point(198, 71);
             btnFilterClear.Name = "btnFilterClear";
             btnFilterClear.Size = new Size(75, 23);
-            btnFilterClear.TabIndex = 28;
+            btnFilterClear.TabIndex = 6;
             btnFilterClear.Text = "Clear";
             btnFilterClear.UseVisualStyleBackColor = true;
             btnFilterClear.Click += btnFilterClear_Click;
@@ -136,7 +136,7 @@
             btnFilter.Location = new Point(119, 71);
             btnFilter.Name = "btnFilter";
             btnFilter.Size = new Size(75, 23);
-            btnFilter.TabIndex = 27;
+            btnFilter.TabIndex = 5;
             btnFilter.Text = "Filter";
             btnFilter.UseVisualStyleBackColor = true;
             btnFilter.Click += btnFilter_Click;
@@ -147,7 +147,7 @@
             txtFilterYearMin.Name = "txtFilterYearMin";
             txtFilterYearMin.PlaceholderText = "Min";
             txtFilterYearMin.Size = new Size(73, 23);
-            txtFilterYearMin.TabIndex = 21;
+            txtFilterYearMin.TabIndex = 1;
             // 
             // lblFilterRating
             // 
@@ -164,7 +164,7 @@
             txtFilterYearMax.Name = "txtFilterYearMax";
             txtFilterYearMax.PlaceholderText = "Max";
             txtFilterYearMax.Size = new Size(73, 23);
-            txtFilterYearMax.TabIndex = 22;
+            txtFilterYearMax.TabIndex = 2;
             // 
             // lblFilterDate
             // 
@@ -181,7 +181,7 @@
             txtFilterRatingMin.Name = "txtFilterRatingMin";
             txtFilterRatingMin.PlaceholderText = "Min";
             txtFilterRatingMin.Size = new Size(73, 23);
-            txtFilterRatingMin.TabIndex = 23;
+            txtFilterRatingMin.TabIndex = 3;
             // 
             // txtFilterRatingMax
             // 
@@ -189,24 +189,25 @@
             txtFilterRatingMax.Name = "txtFilterRatingMax";
             txtFilterRatingMax.PlaceholderText = "Max";
             txtFilterRatingMax.Size = new Size(73, 23);
-            txtFilterRatingMax.TabIndex = 24;
+            txtFilterRatingMax.TabIndex = 4;
             // 
-            // button1
+            // btnSearch
             // 
-            button1.Location = new Point(264, 157);
-            button1.Name = "button1";
-            button1.Size = new Size(53, 23);
-            button1.TabIndex = 20;
-            button1.Text = "Search";
-            button1.UseVisualStyleBackColor = true;
+            btnSearch.Location = new Point(264, 157);
+            btnSearch.Name = "btnSearch";
+            btnSearch.Size = new Size(53, 23);
+            btnSearch.TabIndex = 8;
+            btnSearch.Text = "Search";
+            btnSearch.UseVisualStyleBackColor = true;
+            btnSearch.Click += btnSearch_Click;
             // 
-            // textBox1
+            // txtSearch
             // 
-            textBox1.Location = new Point(21, 157);
-            textBox1.Name = "textBox1";
-            textBox1.PlaceholderText = "Search by Title or Genre...";
-            textBox1.Size = new Size(237, 23);
-            textBox1.TabIndex = 19;
+            txtSearch.Location = new Point(21, 157);
+            txtSearch.Name = "txtSearch";
+            txtSearch.PlaceholderText = "Search by Title or Genre...";
+            txtSearch.Size = new Size(237, 23);
+            txtSearch.TabIndex = 7;
             // 
             // btnCancelMovie
             // 
@@ -214,7 +215,7 @@
             btnCancelMovie.Location = new Point(102, 626);
             btnCancelMovie.Name = "btnCancelMovie";
             btnCancelMovie.Size = new Size(75, 23);
-            btnCancelMovie.TabIndex = 18;
+            btnCancelMovie.TabIndex = 20;
             btnCancelMovie.Text = "Cancel";
             btnCancelMovie.UseVisualStyleBackColor = true;
             btnCancelMovie.Click += btnCancelMovie_Click;
@@ -225,7 +226,7 @@
             btnSaveMovie.Location = new Point(21, 626);
             btnSaveMovie.Name = "btnSaveMovie";
             btnSaveMovie.Size = new Size(75, 23);
-            btnSaveMovie.TabIndex = 17;
+            btnSaveMovie.TabIndex = 19;
             btnSaveMovie.Text = "Save";
             btnSaveMovie.UseVisualStyleBackColor = true;
             btnSaveMovie.Click += btnSaveMovie_Click;
@@ -238,7 +239,7 @@
             txtDescription.ReadOnly = true;
             txtDescription.ScrollBars = ScrollBars.Vertical;
             txtDescription.Size = new Size(294, 131);
-            txtDescription.TabIndex = 16;
+            txtDescription.TabIndex = 18;
             // 
             // lblDescription
             // 
@@ -255,7 +256,7 @@
             txtAvgRating.Name = "txtAvgRating";
             txtAvgRating.ReadOnly = true;
             txtAvgRating.Size = new Size(100, 23);
-            txtAvgRating.TabIndex = 14;
+            txtAvgRating.TabIndex = 0;
             txtAvgRating.TabStop = false;
             // 
             // lblAvgRating
@@ -273,7 +274,7 @@
             txtDuration.Name = "txtDuration";
             txtDuration.ReadOnly = true;
             txtDuration.Size = new Size(100, 23);
-            txtDuration.TabIndex = 12;
+            txtDuration.TabIndex = 17;
             // 
             // lblDuration
             // 
@@ -290,7 +291,7 @@
             txtReleaseYear.Name = "txtReleaseYear";
             txtReleaseYear.ReadOnly = true;
             txtReleaseYear.Size = new Size(100, 23);
-            txtReleaseYear.TabIndex = 10;
+            txtReleaseYear.TabIndex = 16;
             // 
             // lblReleaseYear
             // 
@@ -307,7 +308,7 @@
             txtGenre.Name = "txtGenre";
             txtGenre.ReadOnly = true;
             txtGenre.Size = new Size(200, 23);
-            txtGenre.TabIndex = 8;
+            txtGenre.TabIndex = 15;
             // 
             // lblGenre
             // 
@@ -324,7 +325,7 @@
             txtTitle.Name = "txtTitle";
             txtTitle.ReadOnly = true;
             txtTitle.Size = new Size(200, 23);
-            txtTitle.TabIndex = 6;
+            txtTitle.TabIndex = 14;
             // 
             // lblTitle
             // 
@@ -341,7 +342,7 @@
             btnDeleteMovie.Location = new Point(183, 286);
             btnDeleteMovie.Name = "btnDeleteMovie";
             btnDeleteMovie.Size = new Size(75, 23);
-            btnDeleteMovie.TabIndex = 4;
+            btnDeleteMovie.TabIndex = 13;
             btnDeleteMovie.Text = "Delete";
             btnDeleteMovie.UseVisualStyleBackColor = true;
             btnDeleteMovie.Click += btnDeleteMovie_Click;
@@ -352,7 +353,7 @@
             btnEditMovie.Location = new Point(102, 286);
             btnEditMovie.Name = "btnEditMovie";
             btnEditMovie.Size = new Size(75, 23);
-            btnEditMovie.TabIndex = 3;
+            btnEditMovie.TabIndex = 12;
             btnEditMovie.Text = "Edit";
             btnEditMovie.UseVisualStyleBackColor = true;
             btnEditMovie.Click += btnEditMovie_Click;
@@ -362,7 +363,7 @@
             btnAddMovie.Location = new Point(21, 286);
             btnAddMovie.Name = "btnAddMovie";
             btnAddMovie.Size = new Size(75, 23);
-            btnAddMovie.TabIndex = 2;
+            btnAddMovie.TabIndex = 10;
             btnAddMovie.Text = "Add New";
             btnAddMovie.UseVisualStyleBackColor = true;
             btnAddMovie.Click += btnAddMovie_Click;
@@ -374,7 +375,7 @@
             lstMovies.Location = new Point(21, 186);
             lstMovies.Name = "lstMovies";
             lstMovies.Size = new Size(294, 94);
-            lstMovies.TabIndex = 1;
+            lstMovies.TabIndex = 9;
             lstMovies.SelectedIndexChanged += lstMovies_SelectedIndexChanged;
             // 
             // label1
@@ -412,14 +413,15 @@
             txtReviews.ReadOnly = true;
             txtReviews.ScrollBars = ScrollBars.Vertical;
             txtReviews.Size = new Size(294, 215);
-            txtReviews.TabIndex = 23;
+            txtReviews.TabIndex = 0;
+            txtReviews.TabStop = false;
             // 
             // btnAddReview
             // 
             btnAddReview.Location = new Point(90, 413);
             btnAddReview.Name = "btnAddReview";
             btnAddReview.Size = new Size(75, 23);
-            btnAddReview.TabIndex = 21;
+            btnAddReview.TabIndex = 24;
             btnAddReview.Text = "Add New";
             btnAddReview.UseVisualStyleBackColor = true;
             btnAddReview.Click += btnAddReview_Click;
@@ -431,7 +433,7 @@
             txtUserReview.Name = "txtUserReview";
             txtUserReview.ScrollBars = ScrollBars.Vertical;
             txtUserReview.Size = new Size(221, 79);
-            txtUserReview.TabIndex = 20;
+            txtUserReview.TabIndex = 23;
             // 
             // lblUserReview
             // 
@@ -447,7 +449,7 @@
             txtUserRating.Location = new Point(90, 299);
             txtUserRating.Name = "txtUserRating";
             txtUserRating.Size = new Size(100, 23);
-            txtUserRating.TabIndex = 6;
+            txtUserRating.TabIndex = 22;
             // 
             // lblUserRating
             // 
@@ -463,7 +465,7 @@
             txtUsername.Location = new Point(90, 270);
             txtUsername.Name = "txtUsername";
             txtUsername.Size = new Size(200, 23);
-            txtUsername.TabIndex = 4;
+            txtUsername.TabIndex = 21;
             // 
             // lblName
             // 
@@ -533,8 +535,8 @@
         private TextBox txtUserReview;
         private Label lblUserReview;
         private Button btnAddReview;
-        private Button button1;
-        private TextBox textBox1;
+        private Button btnSearch;
+        private TextBox txtSearch;
         private TextBox txtFilterYearMin;
         private Label lblFilterDate;
         private TextBox txtFilterRatingMax;

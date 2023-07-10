@@ -1,4 +1,3 @@
-using Microsoft.VisualBasic.Devices;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 
@@ -29,11 +28,11 @@ namespace MovieApp
 
             // Add some placeholder reviews.
             // Reviews are my own or from Roger Ebert. https://www.rogerebert.com/reviews/
-            movies[0].Reviews.Add(new Review("brennangoewert", 4.6, "I was not angry that I watched this. Very good stuff."));
+            movies[0].Reviews.Add(new Review("brennangoewert", 4.6, "I was not angry that I watched this. Very good film."));
             movies[0].Reviews.Add(new Review("rogerebert", 4.2, "In form, \"12 Angry Men\" is a courtroom drama. In purpose, it's a crash course in those passages of the Constitution that promise defendants a fair trial and the presumption of innocence."));
             movies[1].Reviews.Add(new Review("brennangoewert", 5, "The cinematography was mind blowing. They captured the feeling of outer space so well."));
             movies[1].Reviews.Add(new Review("rogerebert", 4.7, "It was e. e. cummings, the poet, who said he'd rather learn from one bird how to sing than teach 10,000 stars how not to dance. I imagine cummings would not have enjoyed Stanley Kubrick's \"2001: A Space Odyssey,\" in which stars dance but birds do not sing."));
-            movies[2].Reviews.Add(new Review("brennangoewert", 3.6, "I don't understand French. But I was on edge the whole movie."));
+            movies[2].Reviews.Add(new Review("brennangoewert", 3.6, "I don't understand French. But, it was very engaging."));
             movies[2].Reviews.Add(new Review("rogerebert", 4.5, "Francois Truffaut's \"The 400 Blows\" (1959) is one of the most intensely touching stories ever made about a young adolescent."));
 
             lstMovies.DataSource = movies;
@@ -146,7 +145,7 @@ namespace MovieApp
                     for (int i = 0; i < movie.Reviews.Count; i++)
                     {
                         txtReviews.Text += "\"" + movie.Reviews[i].Comment + "\"\r\n" + movie.Reviews[i].Username + " - " + movie.Reviews[i].Rating.ToString("f1");
-                        if (i != (movie.Reviews.Count - 1)) txtReviews.Text += "\r\n\r\n";
+                        txtReviews.Text += "\r\n\r\n";
                     }
                 }
                 else
@@ -195,7 +194,7 @@ namespace MovieApp
                     case "EditMovie":
 
                         // Get selected movie
-                        Movie movie = movies[lstMovies.SelectedIndex];
+                        Movie movie = (Movie)lstMovies.SelectedItem;
 
                         // Check if the title is changed. The ListBox DisplayMember will need to be updated if so.
                         bool titleChanged = false;
@@ -256,33 +255,7 @@ namespace MovieApp
         private void btnFilter_Click(object sender, EventArgs e)
         {
 
-            // Check if both min and max values are defined.
-            if (txtFilterYearMin.Text != string.Empty && txtFilterYearMax.Text == string.Empty) { MessageBox.Show("Max Year Required"); return; }
-            if (txtFilterYearMax.Text != string.Empty && txtFilterYearMin.Text == string.Empty) { MessageBox.Show("Min Year Required"); return; }
-            if (txtFilterRatingMin.Text != string.Empty && txtFilterRatingMax.Text == string.Empty) { MessageBox.Show("Max Rating Required"); return; }
-            if (txtFilterRatingMax.Text != string.Empty && txtFilterRatingMin.Text == string.Empty) { MessageBox.Show("Min Rating Required"); return; }
-
-            // Get filter values
-            int yearMin, yearMax;
-            double ratingMin, ratingMax;
-            Int32.TryParse(txtFilterYearMin.Text, out yearMin);
-            Int32.TryParse(txtFilterYearMax.Text, out yearMax);
-            double.TryParse(txtFilterRatingMin.Text, out ratingMin);
-            double.TryParse(txtFilterRatingMax.Text, out ratingMax);
-
-            // Filter movies and display results
-            // https://learn.microsoft.com/en-us/dotnet/api/system.linq.enumerable.where?view=net-7.0
-            BindingList<Movie> moviesFiltered = new BindingList<Movie>();
-            if (txtFilterYearMin.Text != string.Empty || txtFilterRatingMin.Text != string.Empty)
-            {
-                moviesFiltered = new BindingList<Movie>(movies.Where(m => (m.ReleaseYear > yearMin && m.ReleaseYear < yearMax) || (m.Rating > ratingMin && m.Rating < ratingMax)).ToList());
-            }
-            if (txtFilterYearMin.Text != string.Empty && txtFilterRatingMin.Text != string.Empty)
-            {
-                moviesFiltered = new BindingList<Movie>(movies.Where(m => (m.ReleaseYear > yearMin && m.ReleaseYear < yearMax) && (m.Rating > ratingMin && m.Rating < ratingMax)).ToList());
-            }
-
-            lstMovies.DataSource = moviesFiltered;
+            lstMovies.DataSource = FilterMovies(movies);
         }
 
         private void btnFilterClear_Click(object sender, EventArgs e)
@@ -302,10 +275,99 @@ namespace MovieApp
             txtUserReview.Text = string.Empty;
         }
 
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            BindingList<Movie> moviesFiltered = new BindingList<Movie>();
+
+            // If a filter is enabled, apply it first.
+            moviesFiltered = FilterMovies(movies);
+
+            // Search movies
+            moviesFiltered = SearchMovies(moviesFiltered);
+
+            lstMovies.DataSource = moviesFiltered;
+        }
+
+        private BindingList<Movie> FilterMovies(BindingList<Movie> moviesToFilter)
+        {
+            BindingList<Movie> moviesFiltered = new BindingList<Movie>();
+
+            try
+            {
+                // Check if both min and max values are defined. Otherwise, return the original list.
+                if (txtFilterYearMin.Text != string.Empty && txtFilterYearMax.Text == string.Empty) { MessageBox.Show("Max Year Required"); return moviesToFilter; }
+                if (txtFilterYearMax.Text != string.Empty && txtFilterYearMin.Text == string.Empty) { MessageBox.Show("Min Year Required"); return moviesToFilter; }
+                if (txtFilterRatingMin.Text != string.Empty && txtFilterRatingMax.Text == string.Empty) { MessageBox.Show("Max Rating Required"); return moviesToFilter; }
+                if (txtFilterRatingMax.Text != string.Empty && txtFilterRatingMin.Text == string.Empty) { MessageBox.Show("Min Rating Required"); return moviesToFilter; }
+
+                // If no filter is defined, return original list.
+                if (txtFilterYearMin.Text == string.Empty && txtFilterRatingMin.Text == string.Empty) return moviesToFilter;
+
+                // Get filter values.
+                int yearMin, yearMax;
+                double ratingMin, ratingMax;
+                //bool boolYearMin = Int32.TryParse(txtFilterYearMin.Text, out yearMin);
+                //bool boolYearMax = Int32.TryParse(txtFilterYearMax.Text, out yearMax);
+                //bool boolRatingMin= double.TryParse(txtFilterRatingMin.Text, out ratingMin);
+                //bool boolRatingMax = double.TryParse(txtFilterRatingMax.Text, out ratingMax);
+
+                // Check if filter values are invalid.
+                if (!Int32.TryParse(txtFilterYearMin.Text, out yearMin) && txtFilterYearMin.Text != string.Empty)
+                {
+                    MessageBox.Show("Invalid Filter Value. Please enter a valid minumum Release Year.");
+                    return moviesToFilter;
+                }
+                if (!Int32.TryParse(txtFilterYearMax.Text, out yearMax) && txtFilterYearMax.Text != string.Empty)
+                {
+                    MessageBox.Show("Invalid Filter Value. Please enter a valid maximum Release Year.");
+                    return moviesToFilter;
+                }
+
+                if (!double.TryParse(txtFilterRatingMin.Text, out ratingMin) && txtFilterRatingMin.Text != string.Empty)
+                {
+                    MessageBox.Show("Invalid Filter Value. Please enter a valid minimum Rating.");
+                    return moviesToFilter;
+                }
+                if (!double.TryParse(txtFilterRatingMax.Text, out ratingMax) && txtFilterRatingMax.Text != string.Empty)
+                {
+                    MessageBox.Show("Invalid Filter Value. Please enter a valid maximum Rating.");
+                    return moviesToFilter;
+                }
+
+                // Filter movies
+                // https://learn.microsoft.com/en-us/dotnet/api/system.linq.enumerable.where?view=net-7.0
+                if (txtFilterYearMin.Text != string.Empty || txtFilterRatingMin.Text != string.Empty)
+                {
+                    moviesFiltered = new BindingList<Movie>(moviesToFilter.Where(m => (m.ReleaseYear > yearMin && m.ReleaseYear < yearMax) || (m.Rating > ratingMin && m.Rating < ratingMax)).ToList());
+                }
+                if (txtFilterYearMin.Text != string.Empty && txtFilterRatingMin.Text != string.Empty)
+                {
+                    moviesFiltered = new BindingList<Movie>(moviesToFilter.Where(m => (m.ReleaseYear > yearMin && m.ReleaseYear < yearMax) && (m.Rating > ratingMin && m.Rating < ratingMax)).ToList());
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            // Return results
+            return moviesFiltered;
+        }
+
+        private BindingList<Movie> SearchMovies(BindingList<Movie> moviesToSearch)
+        {
+            // Search movies
+            // https://learn.microsoft.com/en-us/dotnet/api/system.linq.enumerable.where?view=net-7.0
+            BindingList<Movie> moviesFiltered = new BindingList<Movie>(moviesToSearch.Where(m => (m.Title.Contains(txtSearch.Text) || m.Genre.Contains(txtSearch.Text))).ToList());
+
+            // Return results
+            return moviesFiltered;
+        }
+
         private void btnAddReview_Click(object sender, EventArgs e)
         {
             // Get selected movie
-            Movie movie = movies[lstMovies.SelectedIndex];
+            Movie movie = (Movie)lstMovies.SelectedItem;
 
             try
             {
@@ -317,15 +379,16 @@ namespace MovieApp
                 movie.Reviews.Add(new Review(txtUsername.Text, rating, txtUserReview.Text));
 
                 // Add review to list.
-                txtReviews.Text += "\r\n\r\n";
                 txtReviews.Text += "\"" + txtUserReview.Text + "\"\r\n" + txtUsername.Text + " - " + rating.ToString("f1");
+                txtReviews.Text += "\r\n\r\n";
 
                 // Update new average rating.
                 txtAvgRating.Text = movie.Rating.ToString("f1");
 
                 ClearReviewForm();
 
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
