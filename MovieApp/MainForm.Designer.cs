@@ -509,7 +509,6 @@
             Controls.Add(panelMovies);
             Name = "MainForm";
             Text = "Form1";
-            Load += MainForm_Load;
             Shown += MainForm_Shown;
             panelMovies.ResumeLayout(false);
             panelMovies.PerformLayout();
