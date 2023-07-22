@@ -22,6 +22,9 @@ namespace MovieApp
         // Action to perform on save.
         string SaveAction { get; set; }
 
+        LoginForm loginForm = new LoginForm(); // Login form instance, not shown until ShowDialog() is used.
+        User currentUser;
+
         public MainForm()
         {
             InitializeComponent();
@@ -42,6 +45,45 @@ namespace MovieApp
             // Unsure why there was an initial selection.
             lstMovies.ClearSelected();
             ClearMovieForm();
+
+
+            // Add event handler for login form close that verifies if the user is logged in.
+            loginForm.FormClosing += new FormClosingEventHandler(delegate (object sender, FormClosingEventArgs e)
+            {
+                try
+                {
+                    if (loginForm.loggedIn) currentUser = loginForm.verifiedUser;
+                    else throw new Exception("Login Required");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    e.Cancel = true;
+                }
+            });
+        }
+
+        private void MainForm_Shown(object sender, EventArgs e)
+        {
+            // Show login form on load
+            if (currentUser is null) loginForm.ShowDialog();
+
+            txtLoggedInAs.Text = currentUser.Username;
+
+            // Hide all access controled controls.
+            btnAddMovie.Visible = false;
+            btnEditMovie.Visible = false;
+            btnDeleteMovie.Visible = false;
+            btnRegisterNewUser.Visible = false;
+
+            // Add access critera for different controls.
+            if (currentUser.Username == "admin")
+            {
+                btnAddMovie.Visible = true;
+                btnEditMovie.Visible = true;
+                btnDeleteMovie.Visible = true;
+                btnRegisterNewUser.Visible = true;
+            }
         }
 
         private void btnAddMovie_Click(object sender, EventArgs e)
@@ -375,11 +417,13 @@ namespace MovieApp
                 double rating;
                 double.TryParse(txtUserRating.Text, out rating);
 
+                Review review = new Review(currentUser.Username, rating, txtUserReview.Text);
+
                 // Add new review
-                movie.Reviews.Add(new Review(txtUsername.Text, rating, txtUserReview.Text));
+                movie.Reviews.Add(review);
 
                 // Add review to list.
-                txtReviews.Text += "\"" + txtUserReview.Text + "\"\r\n" + txtUsername.Text + " - " + rating.ToString("f1");
+                txtReviews.Text += "\"" + review.Comment + "\"\r\n" + review.Username + " - " + review.Rating.ToString("f1");
                 txtReviews.Text += "\r\n\r\n";
 
                 // Update new average rating.
@@ -392,6 +436,11 @@ namespace MovieApp
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
 
         }
     }
