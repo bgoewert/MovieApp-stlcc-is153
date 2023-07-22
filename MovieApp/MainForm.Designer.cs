@@ -485,7 +485,7 @@
             // lblLoggedInAs
             // 
             lblLoggedInAs.AutoSize = true;
-            lblLoggedInAs.Location = new Point(15, 16);
+            lblLoggedInAs.Location = new Point(15, 9);
             lblLoggedInAs.Name = "lblLoggedInAs";
             lblLoggedInAs.Size = new Size(63, 15);
             lblLoggedInAs.TabIndex = 2;
@@ -495,7 +495,7 @@
             // 
             txtLoggedInAs.BackColor = SystemColors.Control;
             txtLoggedInAs.BorderStyle = BorderStyle.None;
-            txtLoggedInAs.Location = new Point(84, 16);
+            txtLoggedInAs.Location = new Point(84, 9);
             txtLoggedInAs.Name = "txtLoggedInAs";
             txtLoggedInAs.ReadOnly = true;
             txtLoggedInAs.Size = new Size(265, 16);
@@ -503,7 +503,7 @@
             // 
             // btnRegisterNewUser
             // 
-            btnRegisterNewUser.Location = new Point(367, 12);
+            btnRegisterNewUser.Location = new Point(367, 5);
             btnRegisterNewUser.Name = "btnRegisterNewUser";
             btnRegisterNewUser.Size = new Size(157, 23);
             btnRegisterNewUser.TabIndex = 4;
@@ -521,7 +521,7 @@
             Controls.Add(panelReviews);
             Controls.Add(panelMovies);
             Name = "MainForm";
-            Text = "Form1";
+            Text = "Movie Application";
             Shown += MainForm_Shown;
             panelMovies.ResumeLayout(false);
             panelMovies.PerformLayout();
