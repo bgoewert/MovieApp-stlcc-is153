@@ -89,7 +89,7 @@ namespace MovieApp
         private void txtPassword_KeyPress(object sender, KeyPressEventArgs e)
         {
             // If enter is pressed, try logging in.
-            if (e.KeyChar == (char)13) Login();
+            if (e.KeyChar == (char) Keys.Enter) Login();
         }
     }
 }

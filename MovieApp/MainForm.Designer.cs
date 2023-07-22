@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             panelMovies = new Panel();
+            btnViewAllMovies = new Button();
             grpFilter = new GroupBox();
             btnFilterClear = new Button();
             btnFilter = new Button();
@@ -78,6 +79,7 @@
             // panelMovies
             // 
             panelMovies.BorderStyle = BorderStyle.FixedSingle;
+            panelMovies.Controls.Add(btnViewAllMovies);
             panelMovies.Controls.Add(grpFilter);
             panelMovies.Controls.Add(btnSearch);
             panelMovies.Controls.Add(txtSearch);
@@ -105,6 +107,16 @@
             panelMovies.Size = new Size(337, 668);
             panelMovies.TabIndex = 0;
             // 
+            // btnViewAllMovies
+            // 
+            btnViewAllMovies.Location = new Point(21, 47);
+            btnViewAllMovies.Name = "btnViewAllMovies";
+            btnViewAllMovies.Size = new Size(101, 23);
+            btnViewAllMovies.TabIndex = 1;
+            btnViewAllMovies.Text = "View All Movies";
+            btnViewAllMovies.UseVisualStyleBackColor = true;
+            btnViewAllMovies.Click += btnViewAllMovies_Click;
+            // 
             // grpFilter
             // 
             grpFilter.Controls.Add(btnFilterClear);
@@ -115,10 +127,10 @@
             grpFilter.Controls.Add(lblFilterDate);
             grpFilter.Controls.Add(txtFilterRatingMin);
             grpFilter.Controls.Add(txtFilterRatingMax);
-            grpFilter.Location = new Point(21, 44);
+            grpFilter.Location = new Point(21, 76);
             grpFilter.Name = "grpFilter";
             grpFilter.Size = new Size(296, 107);
-            grpFilter.TabIndex = 27;
+            grpFilter.TabIndex = 6;
             grpFilter.TabStop = false;
             grpFilter.Text = "Filter";
             // 
@@ -194,21 +206,22 @@
             // 
             // btnSearch
             // 
-            btnSearch.Location = new Point(264, 157);
+            btnSearch.Location = new Point(264, 189);
             btnSearch.Name = "btnSearch";
             btnSearch.Size = new Size(53, 23);
-            btnSearch.TabIndex = 8;
+            btnSearch.TabIndex = 12;
             btnSearch.Text = "Search";
             btnSearch.UseVisualStyleBackColor = true;
             btnSearch.Click += btnSearch_Click;
             // 
             // txtSearch
             // 
-            txtSearch.Location = new Point(21, 157);
+            txtSearch.Location = new Point(21, 189);
             txtSearch.Name = "txtSearch";
             txtSearch.PlaceholderText = "Search by Title or Genre...";
             txtSearch.Size = new Size(237, 23);
-            txtSearch.TabIndex = 7;
+            txtSearch.TabIndex = 11;
+            txtSearch.KeyPress += txtSearch_KeyPress;
             // 
             // btnCancelMovie
             // 
@@ -340,10 +353,10 @@
             // btnDeleteMovie
             // 
             btnDeleteMovie.Enabled = false;
-            btnDeleteMovie.Location = new Point(183, 286);
+            btnDeleteMovie.Location = new Point(252, 47);
             btnDeleteMovie.Name = "btnDeleteMovie";
-            btnDeleteMovie.Size = new Size(75, 23);
-            btnDeleteMovie.TabIndex = 13;
+            btnDeleteMovie.Size = new Size(65, 23);
+            btnDeleteMovie.TabIndex = 5;
             btnDeleteMovie.Text = "Delete";
             btnDeleteMovie.UseVisualStyleBackColor = true;
             btnDeleteMovie.Click += btnDeleteMovie_Click;
@@ -351,20 +364,20 @@
             // btnEditMovie
             // 
             btnEditMovie.Enabled = false;
-            btnEditMovie.Location = new Point(102, 286);
+            btnEditMovie.Location = new Point(187, 47);
             btnEditMovie.Name = "btnEditMovie";
-            btnEditMovie.Size = new Size(75, 23);
-            btnEditMovie.TabIndex = 12;
+            btnEditMovie.Size = new Size(65, 23);
+            btnEditMovie.TabIndex = 4;
             btnEditMovie.Text = "Edit";
             btnEditMovie.UseVisualStyleBackColor = true;
             btnEditMovie.Click += btnEditMovie_Click;
             // 
             // btnAddMovie
             // 
-            btnAddMovie.Location = new Point(21, 286);
+            btnAddMovie.Location = new Point(122, 47);
             btnAddMovie.Name = "btnAddMovie";
-            btnAddMovie.Size = new Size(75, 23);
-            btnAddMovie.TabIndex = 10;
+            btnAddMovie.Size = new Size(65, 23);
+            btnAddMovie.TabIndex = 3;
             btnAddMovie.Text = "Add New";
             btnAddMovie.UseVisualStyleBackColor = true;
             btnAddMovie.Click += btnAddMovie_Click;
@@ -373,10 +386,10 @@
             // 
             lstMovies.FormattingEnabled = true;
             lstMovies.ItemHeight = 15;
-            lstMovies.Location = new Point(21, 186);
+            lstMovies.Location = new Point(21, 218);
             lstMovies.Name = "lstMovies";
             lstMovies.Size = new Size(294, 94);
-            lstMovies.TabIndex = 9;
+            lstMovies.TabIndex = 2;
             lstMovies.SelectedIndexChanged += lstMovies_SelectedIndexChanged;
             // 
             // label1
@@ -472,25 +485,25 @@
             // lblLoggedInAs
             // 
             lblLoggedInAs.AutoSize = true;
-            lblLoggedInAs.Location = new Point(12, 9);
+            lblLoggedInAs.Location = new Point(15, 16);
             lblLoggedInAs.Name = "lblLoggedInAs";
-            lblLoggedInAs.Size = new Size(79, 15);
+            lblLoggedInAs.Size = new Size(63, 15);
             lblLoggedInAs.TabIndex = 2;
-            lblLoggedInAs.Text = "Logged In As:";
+            lblLoggedInAs.Text = "Logged In:";
             // 
             // txtLoggedInAs
             // 
             txtLoggedInAs.BackColor = SystemColors.Control;
             txtLoggedInAs.BorderStyle = BorderStyle.None;
-            txtLoggedInAs.Enabled = false;
-            txtLoggedInAs.Location = new Point(97, 9);
+            txtLoggedInAs.Location = new Point(84, 16);
             txtLoggedInAs.Name = "txtLoggedInAs";
-            txtLoggedInAs.Size = new Size(249, 16);
+            txtLoggedInAs.ReadOnly = true;
+            txtLoggedInAs.Size = new Size(265, 16);
             txtLoggedInAs.TabIndex = 3;
             // 
             // btnRegisterNewUser
             // 
-            btnRegisterNewUser.Location = new Point(367, 9);
+            btnRegisterNewUser.Location = new Point(367, 12);
             btnRegisterNewUser.Name = "btnRegisterNewUser";
             btnRegisterNewUser.Size = new Size(129, 23);
             btnRegisterNewUser.TabIndex = 4;
@@ -564,5 +577,6 @@
         private Label lblLoggedInAs;
         private TextBox txtLoggedInAs;
         private Button btnRegisterNewUser;
+        private Button btnViewAllMovies;
     }
 }

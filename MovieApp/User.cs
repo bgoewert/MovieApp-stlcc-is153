@@ -9,12 +9,13 @@ namespace MovieApp
     {
         public string Username { get; set; }
         public string Password { get; set; }
-        public string Email { get; set; }
 
-        public User(string username, string password, string email="") {
+        private readonly List<Movie> listFavorites = new List<Movie>();
+        public List<Movie> Favorites { get => listFavorites; }
+
+        public User(string username, string password) {
             Username = username;
             Password = password;
-            Email = email;
         }
 
         public static User? Login(string username, string password)

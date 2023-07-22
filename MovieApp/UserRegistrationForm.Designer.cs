@@ -88,6 +88,7 @@
             txtPasswordConfirm.PasswordChar = '*';
             txtPasswordConfirm.Size = new Size(200, 23);
             txtPasswordConfirm.TabIndex = 3;
+            txtPasswordConfirm.KeyPress += txtPasswordConfirm_KeyPress;
             // 
             // label1
             // 

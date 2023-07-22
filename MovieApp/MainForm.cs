@@ -13,7 +13,7 @@ namespace MovieApp
          * A BindingList was used here because it provides a two-way data-binding for the ListBox data source.
          * See https://learn.microsoft.com/en-us/dotnet/api/system.componentmodel.bindinglist-1?view=net-7.0#remarks
          */
-        BindingList<Movie> movies = new BindingList<Movie> {
+        List<Movie> movies = new List<Movie> {
             new Movie("12 Angry Men", "Drama", 1957, 95, "Following the closing arguments in a murder trial, the 12 members of the jury must deliberate, with a guilty verdict meaning death for the accused, an inner-city teen. As the dozen men try to reach a unanimous decision while sequestered in a room, one juror (Henry Fonda) casts considerable doubt on elements of the case. Personal issues soon rise to the surface, and conflict threatens to derail the delicate process that will decide one boy's fate."),
             new Movie("2001: A Space Odyssey", "Sci-Fi", 1968, 139, "An imposing black structure provides a connection between the past and the future in this enigmatic adaptation of a short story by revered sci-fi author Arthur C. Clarke. When Dr. Dave Bowman (Keir Dullea) and other astronauts are sent on a mysterious mission, their ship's computer system, HAL, begins to display increasingly strange behavior, leading up to a tense showdown between man and machine that results in a mind-bending trek through space and time."),
             new Movie("The 400 Blows", "Crime/Drama", 1959, 93, "For young Parisian boy Antoine Doinel (Jean-Pierre Léaud), life is one difficult situation after another. Surrounded by inconsiderate adults, including his neglectful parents (Claire Maurier, Albert Remy), Antoine spends his days with his best friend, Rene (Patrick Auffray), trying to plan for a better life. When one of their schemes goes awry, Antoine ends up in trouble with the law, leading to even more conflicts with unsympathetic authority figures.")
@@ -38,15 +38,6 @@ namespace MovieApp
             movies[2].Reviews.Add(new Review("brennangoewert", 3.6, "I don't understand French. But, it was very engaging."));
             movies[2].Reviews.Add(new Review("rogerebert", 4.5, "Francois Truffaut's \"The 400 Blows\" (1959) is one of the most intensely touching stories ever made about a young adolescent."));
 
-            lstMovies.DataSource = movies;
-            lstMovies.DisplayMember = "Title";
-
-            // Clear selected items on load.
-            // Unsure why there was an initial selection.
-            lstMovies.ClearSelected();
-            ClearMovieForm();
-
-
             // Add event handler for login form close that verifies if the user is logged in.
             loginForm.FormClosing += new FormClosingEventHandler(delegate (object sender, FormClosingEventArgs e)
             {
@@ -61,6 +52,14 @@ namespace MovieApp
                     e.Cancel = true;
                 }
             });
+
+            // Hide all access controled controls.
+            btnAddMovie.Visible = false;
+            btnEditMovie.Visible = false;
+            btnDeleteMovie.Visible = false;
+            btnRegisterNewUser.Visible = false;
+            btnSaveMovie.Visible = false;
+            btnCancelMovie.Visible = false;
         }
 
         private void MainForm_Shown(object sender, EventArgs e)
@@ -70,20 +69,17 @@ namespace MovieApp
 
             txtLoggedInAs.Text = currentUser.Username;
 
-            // Hide all access controled controls.
-            btnAddMovie.Visible = false;
-            btnEditMovie.Visible = false;
-            btnDeleteMovie.Visible = false;
-            btnRegisterNewUser.Visible = false;
-
-            // Add access critera for different controls.
+            // Add access for different controls.
             if (currentUser.Username == "admin")
             {
                 btnAddMovie.Visible = true;
                 btnEditMovie.Visible = true;
                 btnDeleteMovie.Visible = true;
                 btnRegisterNewUser.Visible = true;
+                btnSaveMovie.Visible = true;
+                btnCancelMovie.Visible = true;
             }
+
         }
 
         private void btnAddMovie_Click(object sender, EventArgs e)
@@ -112,6 +108,9 @@ namespace MovieApp
             txtDescription.ReadOnly = false;
             btnSaveMovie.Enabled = true;
             btnCancelMovie.Enabled = true;
+
+            // Focus on the movie form
+            txtTitle.Focus();
         }
 
         private void btnEditMovie_Click(object sender, EventArgs e)
@@ -229,8 +228,9 @@ namespace MovieApp
                             duration,
                             txtDescription.Text
                         ));
-
-                        lstMovies.SelectedItem = movies.Last();
+                        UpdateMovieList(movies); // Update movie list with new movie
+                        lstMovies.SelectedItem = movies.Last(); // Select the new movie
+                        lstMovies.Focus(); // Change focus to the movie list
                         break;
 
                     case "EditMovie":
@@ -294,45 +294,48 @@ namespace MovieApp
             btnCancelMovie.Enabled = false;
         }
 
-        private void btnFilter_Click(object sender, EventArgs e)
-        {
-
-            lstMovies.DataSource = FilterMovies(movies);
-        }
-
-        private void btnFilterClear_Click(object sender, EventArgs e)
+        private void ClearFilterForm()
         {
             txtFilterYearMin.Text = string.Empty;
             txtFilterYearMax.Text = string.Empty;
             txtFilterRatingMin.Text = string.Empty;
             txtFilterRatingMax.Text = string.Empty;
+            txtSearch.Text = string.Empty;
+        }
 
-            lstMovies.DataSource = movies;
+        private void btnFilter_Click(object sender, EventArgs e)
+        {
+
+            // Get filtered movies
+            List<Movie> filteredMovies = FilterMovies(movies);
+
+            // Update movie list
+            UpdateMovieList(filteredMovies);
+        }
+
+        private void btnFilterClear_Click(object sender, EventArgs e)
+        {
+            // Clear filter and search inputs
+            ClearFilterForm();
+
+            // Reset movie list
+            UpdateMovieList(movies);
         }
 
         private void ClearReviewForm()
         {
-            txtUsername.Text = string.Empty;
             txtUserRating.Text = string.Empty;
             txtUserReview.Text = string.Empty;
         }
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
-            BindingList<Movie> moviesFiltered = new BindingList<Movie>();
-
-            // If a filter is enabled, apply it first.
-            moviesFiltered = FilterMovies(movies);
-
-            // Search movies
-            moviesFiltered = SearchMovies(moviesFiltered);
-
-            lstMovies.DataSource = moviesFiltered;
+            SearchMovieList();
         }
 
-        private BindingList<Movie> FilterMovies(BindingList<Movie> moviesToFilter)
+        private List<Movie> FilterMovies(List<Movie> moviesToFilter)
         {
-            BindingList<Movie> moviesFiltered = new BindingList<Movie>();
+            List<Movie> moviesFiltered = new List<Movie>();
 
             try
             {
@@ -380,11 +383,11 @@ namespace MovieApp
                 // https://learn.microsoft.com/en-us/dotnet/api/system.linq.enumerable.where?view=net-7.0
                 if (txtFilterYearMin.Text != string.Empty || txtFilterRatingMin.Text != string.Empty)
                 {
-                    moviesFiltered = new BindingList<Movie>(moviesToFilter.Where(m => (m.ReleaseYear > yearMin && m.ReleaseYear < yearMax) || (m.Rating > ratingMin && m.Rating < ratingMax)).ToList());
+                    moviesFiltered = new List<Movie>(moviesToFilter.Where(m => (m.ReleaseYear > yearMin && m.ReleaseYear < yearMax) || (m.Rating > ratingMin && m.Rating < ratingMax)).ToList());
                 }
                 if (txtFilterYearMin.Text != string.Empty && txtFilterRatingMin.Text != string.Empty)
                 {
-                    moviesFiltered = new BindingList<Movie>(moviesToFilter.Where(m => (m.ReleaseYear > yearMin && m.ReleaseYear < yearMax) && (m.Rating > ratingMin && m.Rating < ratingMax)).ToList());
+                    moviesFiltered = new List<Movie>(moviesToFilter.Where(m => (m.ReleaseYear > yearMin && m.ReleaseYear < yearMax) && (m.Rating > ratingMin && m.Rating < ratingMax)).ToList());
                 }
             }
             catch (Exception ex)
@@ -396,11 +399,11 @@ namespace MovieApp
             return moviesFiltered;
         }
 
-        private BindingList<Movie> SearchMovies(BindingList<Movie> moviesToSearch)
+        private List<Movie> SearchMovies(List<Movie> moviesToSearch)
         {
             // Search movies
             // https://learn.microsoft.com/en-us/dotnet/api/system.linq.enumerable.where?view=net-7.0
-            BindingList<Movie> moviesFiltered = new BindingList<Movie>(moviesToSearch.Where(m => (m.Title.Contains(txtSearch.Text) || m.Genre.Contains(txtSearch.Text))).ToList());
+            List<Movie> moviesFiltered = new List<Movie>(moviesToSearch.Where(m => (m.Title.Contains(txtSearch.Text) || m.Genre.Contains(txtSearch.Text))).ToList());
 
             // Return results
             return moviesFiltered;
@@ -408,35 +411,78 @@ namespace MovieApp
 
         private void btnAddReview_Click(object sender, EventArgs e)
         {
-            // Get selected movie
-            Movie movie = (Movie)lstMovies.SelectedItem;
 
-            try
+            // Ensure a movie is selected
+            if (lstMovies.SelectedIndex > -1)
             {
-                // Parse rating
-                double rating;
-                double.TryParse(txtUserRating.Text, out rating);
+                // Get selected movie
+                Movie movie = (Movie)lstMovies.SelectedItem;
 
-                Review review = new Review(currentUser.Username, rating, txtUserReview.Text);
+                try
+                {
+                    // Parse rating
+                    double rating;
+                    double.TryParse(txtUserRating.Text, out rating);
 
-                // Add new review
-                movie.Reviews.Add(review);
+                    Review review = new Review(currentUser.Username, rating, txtUserReview.Text);
 
-                // Add review to list.
-                txtReviews.Text += "\"" + review.Comment + "\"\r\n" + review.Username + " - " + review.Rating.ToString("f1");
-                txtReviews.Text += "\r\n\r\n";
+                    // Add new review
+                    movie.Reviews.Add(review);
 
-                // Update new average rating.
-                txtAvgRating.Text = movie.Rating.ToString("f1");
+                    // Add review to list.
+                    txtReviews.Text += "\"" + review.Comment + "\"\r\n" + review.Username + " - " + review.Rating.ToString("f1");
+                    txtReviews.Text += "\r\n\r\n";
 
-                ClearReviewForm();
+                    // Update new average rating.
+                    txtAvgRating.Text = movie.Rating.ToString("f1");
 
+                    ClearReviewForm();
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+        }
 
+        private void UpdateMovieList(List<Movie> movies)
+        {
+            lstMovies.DataSource = null; // Clear list
+            lstMovies.DataSource = movies; // Update list
+            lstMovies.DisplayMember = "Title"; // Reset display member
+
+            // Clear selected items on load.
+            // Unsure why there was an initial selection.
+            lstMovies.ClearSelected();
+            ClearMovieForm();
+        }
+
+        private void btnViewAllMovies_Click(object sender, EventArgs e)
+        {
+            // Display movies
+            UpdateMovieList(movies);
+
+            // Clear filters
+        }
+
+        private void txtSearch_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Enter) SearchMovieList();
+        }
+
+        private void SearchMovieList()
+        {
+            List<Movie> moviesFiltered = new List<Movie>();
+
+            // If a filter is enabled, apply it first.
+            moviesFiltered = FilterMovies(movies);
+
+            // Search movies
+            moviesFiltered = SearchMovies(moviesFiltered);
+
+            // Update movie list
+            UpdateMovieList(moviesFiltered);
         }
     }
 }

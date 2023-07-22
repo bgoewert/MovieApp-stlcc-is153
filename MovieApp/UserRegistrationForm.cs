@@ -58,5 +58,10 @@ namespace MovieApp
         {
             Register();
         }
+
+        private void txtPasswordConfirm_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Enter) Register();
+        }
     }
 }
