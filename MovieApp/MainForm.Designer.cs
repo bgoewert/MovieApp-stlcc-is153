@@ -412,25 +412,25 @@
             panelReviews.Controls.Add(txtUserRating);
             panelReviews.Controls.Add(lblUserRating);
             panelReviews.Controls.Add(label2);
-            panelReviews.Location = new Point(367, 308);
+            panelReviews.Location = new Point(367, 51);
             panelReviews.Name = "panelReviews";
-            panelReviews.Size = new Size(329, 411);
+            panelReviews.Size = new Size(329, 668);
             panelReviews.TabIndex = 1;
             // 
             // txtReviews
             // 
-            txtReviews.Location = new Point(17, 37);
+            txtReviews.Location = new Point(17, 47);
             txtReviews.Multiline = true;
             txtReviews.Name = "txtReviews";
             txtReviews.ReadOnly = true;
             txtReviews.ScrollBars = ScrollBars.Vertical;
-            txtReviews.Size = new Size(294, 215);
+            txtReviews.Size = new Size(294, 458);
             txtReviews.TabIndex = 0;
             txtReviews.TabStop = false;
             // 
             // btnAddReview
             // 
-            btnAddReview.Location = new Point(90, 372);
+            btnAddReview.Location = new Point(90, 625);
             btnAddReview.Name = "btnAddReview";
             btnAddReview.Size = new Size(75, 23);
             btnAddReview.TabIndex = 24;
@@ -440,7 +440,7 @@
             // 
             // txtUserReview
             // 
-            txtUserReview.Location = new Point(90, 287);
+            txtUserReview.Location = new Point(90, 540);
             txtUserReview.Multiline = true;
             txtUserReview.Name = "txtUserReview";
             txtUserReview.ScrollBars = ScrollBars.Vertical;
@@ -450,7 +450,7 @@
             // lblUserReview
             // 
             lblUserReview.AutoSize = true;
-            lblUserReview.Location = new Point(17, 290);
+            lblUserReview.Location = new Point(17, 543);
             lblUserReview.Name = "lblUserReview";
             lblUserReview.Size = new Size(44, 15);
             lblUserReview.TabIndex = 19;
@@ -458,7 +458,7 @@
             // 
             // txtUserRating
             // 
-            txtUserRating.Location = new Point(90, 258);
+            txtUserRating.Location = new Point(90, 511);
             txtUserRating.Name = "txtUserRating";
             txtUserRating.Size = new Size(100, 23);
             txtUserRating.TabIndex = 22;
@@ -466,7 +466,7 @@
             // lblUserRating
             // 
             lblUserRating.AutoSize = true;
-            lblUserRating.Location = new Point(17, 261);
+            lblUserRating.Location = new Point(17, 514);
             lblUserRating.Name = "lblUserRating";
             lblUserRating.Size = new Size(41, 15);
             lblUserRating.TabIndex = 5;
@@ -505,9 +505,9 @@
             // 
             btnRegisterNewUser.Location = new Point(367, 12);
             btnRegisterNewUser.Name = "btnRegisterNewUser";
-            btnRegisterNewUser.Size = new Size(129, 23);
+            btnRegisterNewUser.Size = new Size(157, 23);
             btnRegisterNewUser.TabIndex = 4;
-            btnRegisterNewUser.Text = "Register New User";
+            btnRegisterNewUser.Text = "Add a New User Account";
             btnRegisterNewUser.UseVisualStyleBackColor = true;
             // 
             // MainForm
