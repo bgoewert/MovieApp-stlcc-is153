@@ -38,6 +38,7 @@ namespace MovieApp
                         else
                         {
                             UserList.Users.Add(new User(txtUsername.Text, txtPassword.Text));
+                            registered = true;
                             Close();
                         }
                     }
@@ -62,6 +63,15 @@ namespace MovieApp
         private void txtPasswordConfirm_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == (char)Keys.Enter) Register();
+        }
+
+        private void UserRegistrationForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (registered)
+            {
+                // Display a success message with the user's username.
+                MessageBox.Show($"New user account added succesfully. \n\nNew User: {UserList.Users.Last().Username}");
+            }
         }
     }
 }

@@ -23,7 +23,8 @@ namespace MovieApp
         string SaveAction { get; set; }
 
         LoginForm loginForm = new LoginForm(); // Login form instance, not shown until ShowDialog() is used.
-        User currentUser;
+        User? currentUser;
+        bool loggedIn;
 
         public MainForm()
         {
@@ -39,19 +40,7 @@ namespace MovieApp
             movies[2].Reviews.Add(new Review("rogerebert", 4.5, "Francois Truffaut's \"The 400 Blows\" (1959) is one of the most intensely touching stories ever made about a young adolescent."));
 
             // Add event handler for login form close that verifies if the user is logged in.
-            loginForm.FormClosing += new FormClosingEventHandler(delegate (object sender, FormClosingEventArgs e)
-            {
-                try
-                {
-                    if (loginForm.loggedIn) currentUser = loginForm.verifiedUser;
-                    else throw new Exception("Login Required");
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    e.Cancel = true;
-                }
-            });
+            CheckIfLoggedIn();
 
             // Hide all access controled controls.
             btnAddMovie.Visible = false;
@@ -67,19 +56,42 @@ namespace MovieApp
             // Show login form on load
             if (currentUser is null) loginForm.ShowDialog();
 
-            txtLoggedInAs.Text = currentUser.Username;
-
-            // Add access for different controls.
-            if (currentUser.Username == "admin")
+            if (currentUser is not null)
             {
-                btnAddMovie.Visible = true;
-                btnEditMovie.Visible = true;
-                btnDeleteMovie.Visible = true;
-                btnRegisterNewUser.Visible = true;
-                btnSaveMovie.Visible = true;
-                btnCancelMovie.Visible = true;
-            }
+                txtLoggedInAs.Text = currentUser.Username;
 
+                // Add access for different controls.
+                if (currentUser.Username == "admin")
+                {
+                    btnAddMovie.Visible = true;
+                    btnEditMovie.Visible = true;
+                    btnDeleteMovie.Visible = true;
+                    btnRegisterNewUser.Visible = true;
+                    btnSaveMovie.Visible = true;
+                    btnCancelMovie.Visible = true;
+                }
+            }
+        }
+
+        private void CheckIfLoggedIn()
+        {
+            loginForm.FormClosing += new FormClosingEventHandler(delegate (object sender, FormClosingEventArgs e)
+            {
+                try
+                {
+                    if (loginForm.loggedIn)
+                    {
+                        currentUser = loginForm.verifiedUser;
+                        loggedIn = loginForm.loggedIn;
+                    }
+                    else throw new Exception("Login Required");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    e.Cancel = true;
+                }
+            });
         }
 
         private void btnAddMovie_Click(object sender, EventArgs e)
@@ -151,14 +163,15 @@ namespace MovieApp
 
         private void lstMovies_SelectedIndexChanged(object sender, EventArgs e)
         {
-            btnEditMovie.Enabled = true;
-            btnDeleteMovie.Enabled = true;
-
             try
             {
                 // If there is a movie selected.
                 if (lstMovies.SelectedIndex >= 0)
                 {
+                    // Enable edit/delete buttons
+                    btnEditMovie.Enabled = true;
+                    btnDeleteMovie.Enabled = true;
+
                     // Get selected movie.
                     Movie movie = (Movie)lstMovies.SelectedItem;
 
@@ -413,7 +426,7 @@ namespace MovieApp
         {
 
             // Ensure a movie is selected
-            if (lstMovies.SelectedIndex > -1)
+            if (lstMovies.SelectedItem is not null && currentUser is not null)
             {
                 // Get selected movie
                 Movie movie = (Movie)lstMovies.SelectedItem;
@@ -464,6 +477,7 @@ namespace MovieApp
             UpdateMovieList(movies);
 
             // Clear filters
+            ClearFilterForm();
         }
 
         private void txtSearch_KeyPress(object sender, KeyPressEventArgs e)
@@ -483,6 +497,26 @@ namespace MovieApp
 
             // Update movie list
             UpdateMovieList(moviesFiltered);
+        }
+
+        private void btnRegisterNewUser_Click(object sender, EventArgs e)
+        {
+            UserRegistrationForm registrationForm = new UserRegistrationForm();
+            registrationForm.ShowDialog();
+        }
+
+        private void btnLogut_Click(object sender, EventArgs e)
+        {
+            // Reset logged in status
+            loggedIn = false;
+            currentUser = null;
+            loginForm.loggedIn = false;
+            loginForm.verifiedUser = null;
+            txtLoggedInAs.Text = string.Empty;
+
+            // Show login form again
+            loginForm.ShowDialog();
+            CheckIfLoggedIn();
         }
     }
 }

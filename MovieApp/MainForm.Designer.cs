@@ -71,6 +71,7 @@
             lblLoggedInAs = new Label();
             txtLoggedInAs = new TextBox();
             btnRegisterNewUser = new Button();
+            btnLogut = new Button();
             panelMovies.SuspendLayout();
             grpFilter.SuspendLayout();
             panelReviews.SuspendLayout();
@@ -503,18 +504,30 @@
             // 
             // btnRegisterNewUser
             // 
-            btnRegisterNewUser.Location = new Point(367, 5);
+            btnRegisterNewUser.Location = new Point(100, 27);
             btnRegisterNewUser.Name = "btnRegisterNewUser";
             btnRegisterNewUser.Size = new Size(157, 23);
             btnRegisterNewUser.TabIndex = 4;
             btnRegisterNewUser.Text = "Add a New User Account";
             btnRegisterNewUser.UseVisualStyleBackColor = true;
+            btnRegisterNewUser.Click += btnRegisterNewUser_Click;
+            // 
+            // btnLogut
+            // 
+            btnLogut.Location = new Point(15, 27);
+            btnLogut.Name = "btnLogut";
+            btnLogut.Size = new Size(79, 23);
+            btnLogut.TabIndex = 4;
+            btnLogut.Text = "Logut";
+            btnLogut.UseVisualStyleBackColor = true;
+            btnLogut.Click += btnLogut_Click;
             // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(708, 731);
+            Controls.Add(btnLogut);
             Controls.Add(btnRegisterNewUser);
             Controls.Add(txtLoggedInAs);
             Controls.Add(lblLoggedInAs);
@@ -578,5 +591,6 @@
         private TextBox txtLoggedInAs;
         private Button btnRegisterNewUser;
         private Button btnViewAllMovies;
+        private Button btnLogut;
     }
 }

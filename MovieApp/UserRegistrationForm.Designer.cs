@@ -129,6 +129,7 @@
             StartPosition = FormStartPosition.CenterParent;
             Text = "UserRegistrationForm";
             TopMost = true;
+            FormClosing += UserRegistrationForm_FormClosing;
             ResumeLayout(false);
             PerformLayout();
         }
