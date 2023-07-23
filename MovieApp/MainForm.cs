@@ -494,7 +494,7 @@ namespace MovieApp
         private void btnRegisterNewUser_Click(object sender, EventArgs e)
         {
             // Create a new registration form instance.
-            UserRegistrationForm registrationForm = new UserRegistrationForm();
+            RegistrationForm registrationForm = new RegistrationForm();
 
             // Show the registration form as a dialog box.
             registrationForm.ShowDialog();

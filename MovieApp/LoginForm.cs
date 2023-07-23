@@ -60,7 +60,7 @@ namespace MovieApp
             try
             {
                 // Create registration form object.
-                UserRegistrationForm registrationForm = new UserRegistrationForm();
+                RegistrationForm registrationForm = new RegistrationForm();
 
                 // Create event handler to check if sucessfully registered and update text notifcation if so.
                 registrationForm.FormClosing += new FormClosingEventHandler(delegate (object sender, FormClosingEventArgs e)

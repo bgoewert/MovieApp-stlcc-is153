@@ -1,6 +1,6 @@
 ﻿namespace MovieApp
 {
-    partial class UserRegistrationForm
+    partial class RegistrationForm
     {
         /// <summary>
         /// Required designer variable.

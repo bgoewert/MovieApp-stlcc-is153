@@ -10,11 +10,11 @@ using System.Windows.Forms;
 
 namespace MovieApp
 {
-    public partial class UserRegistrationForm : Form
+    public partial class RegistrationForm : Form
     {
         internal bool registered = false;
 
-        public UserRegistrationForm()
+        public RegistrationForm()
         {
             InitializeComponent();
         }
