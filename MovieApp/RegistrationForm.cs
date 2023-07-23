@@ -40,7 +40,7 @@ namespace MovieApp
                             User newUser = new User(txtUsername.Text, txtPassword.Text);
 
                             // Check to see of the user already exists.
-                            if (User.UserList.FindIndex(0,u => u.Username.ToLower() == newUser.Username.ToLower()) >= 0) throw new Exception("User already exists.");
+                            if (User.UserList.FindIndex(0,u => u.Username.ToLower() == newUser.Username.ToLower()) != -1) throw new Exception("User already exists.");
 
                             // If not already existing, add the new user.
                             User.UserList.Add(newUser);
