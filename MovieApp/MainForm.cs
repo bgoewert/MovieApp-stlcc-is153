@@ -43,12 +43,16 @@ namespace MovieApp
             movies[2].Reviews.Add(new Review("rogerebert", 4.5, "Francois Truffaut's \"The 400 Blows\" (1959) is one of the most intensely touching stories ever made about a young adolescent."));
         }
 
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            //Add event handler to apply access control when successfully logged in.
+            loginForm.FormClosed += new FormClosedEventHandler((object sender, FormClosedEventArgs e) => ApplyAccessControl());
+        }
+
         private void MainForm_Shown(object sender, EventArgs e)
         {
             // Show login form on load
             if (currentUser is null) loginForm.ShowDialog();
-
-            ApplyAccessControl();
         }
 
         private void ApplyAccessControl()
