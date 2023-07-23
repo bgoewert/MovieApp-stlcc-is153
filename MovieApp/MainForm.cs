@@ -35,12 +35,12 @@ namespace MovieApp
              * Reviews are my own or from Roger Ebert.
              * https://www.rogerebert.com/reviews/
              */
-            movies[0].Reviews.Add(new Review("brennangoewert", 4.6, "I was not angry that I watched this. Very good film."));
-            movies[0].Reviews.Add(new Review("rogerebert", 4.2, "In form, \"12 Angry Men\" is a courtroom drama. In purpose, it's a crash course in those passages of the Constitution that promise defendants a fair trial and the presumption of innocence."));
-            movies[1].Reviews.Add(new Review("brennangoewert", 5, "The cinematography was mind blowing. They captured the feeling of outer space so well."));
-            movies[1].Reviews.Add(new Review("rogerebert", 4.7, "It was e. e. cummings, the poet, who said he'd rather learn from one bird how to sing than teach 10,000 stars how not to dance. I imagine cummings would not have enjoyed Stanley Kubrick's \"2001: A Space Odyssey,\" in which stars dance but birds do not sing."));
-            movies[2].Reviews.Add(new Review("brennangoewert", 3.6, "I don't understand French. But, it was very engaging."));
-            movies[2].Reviews.Add(new Review("rogerebert", 4.5, "Francois Truffaut's \"The 400 Blows\" (1959) is one of the most intensely touching stories ever made about a young adolescent."));
+            Movie.MovieList.Values.ElementAt(0).Reviews.Add(new Review("brennangoewert", 4.6, "I was not angry that I watched this. Very good film."));
+            Movie.MovieList.Values.ElementAt(0).Reviews.Add(new Review("rogerebert", 4.2, "In form, \"12 Angry Men\" is a courtroom drama. In purpose, it's a crash course in those passages of the Constitution that promise defendants a fair trial and the presumption of innocence."));
+            Movie.MovieList.Values.ElementAt(1).Reviews.Add(new Review("brennangoewert", 5, "The cinematography was mind blowing. They captured the feeling of outer space so well."));
+            Movie.MovieList.Values.ElementAt(1).Reviews.Add(new Review("rogerebert", 4.7, "It was e. e. cummings, the poet, who said he'd rather learn from one bird how to sing than teach 10,000 stars how not to dance. I imagine cummings would not have enjoyed Stanley Kubrick's \"2001: A Space Odyssey,\" in which stars dance but birds do not sing."));
+            Movie.MovieList.Values.ElementAt(2).Reviews.Add(new Review("brennangoewert", 3.6, "I don't understand French. But, it was very engaging."));
+            Movie.MovieList.Values.ElementAt(2).Reviews.Add(new Review("rogerebert", 4.5, "Francois Truffaut's \"The 400 Blows\" (1959) is one of the most intensely touching stories ever made about a young adolescent."));
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -142,7 +142,8 @@ namespace MovieApp
         private void btnDeleteMovie_Click(object sender, EventArgs e)
         {
             // Remove selected movie from collection.
-            movies.Remove(movies[lstMovies.SelectedIndex]);
+            if (lstMovies.SelectedItem is not null)
+                Movie.MovieList.Remove(lstMovies.SelectedItem.ToString());
         }
 
         private void btnCancelMovie_Click(object sender, EventArgs e)
@@ -224,15 +225,15 @@ namespace MovieApp
                     case "AddMovie":
 
                         // Add new movie to list.
-                        movies.Add(new Movie(
+                        Movie.MovieList.Add(txtTitle.Text, new Movie(
                             txtTitle.Text,
                             txtGenre.Text,
                             releaseYear,
                             duration,
                             txtDescription.Text
                         ));
-                        UpdateMovieList(movies); // Update movie list with new movie
-                        lstMovies.SelectedItem = movies.Last(); // Select the new movie
+                        UpdateMovieList(Movie.MovieList.Values.ToList()); // Update movie list with new movie
+                        lstMovies.SelectedItem = Movie.MovieList.Last(); // Select the new movie
                         lstMovies.Focus(); // Change focus to the movie list
                         break;
 
@@ -310,7 +311,7 @@ namespace MovieApp
         {
 
             // Get filtered movies
-            List<Movie> filteredMovies = FilterMovies(movies);
+            List<Movie> filteredMovies = FilterMovies(Movie.MovieList.Values.ToList());
 
             // Update movie list
             UpdateMovieList(filteredMovies);
@@ -322,7 +323,7 @@ namespace MovieApp
             ClearFilterForm();
 
             // Reset movie list
-            UpdateMovieList(movies);
+            UpdateMovieList(Movie.MovieList.Values.ToList());
         }
 
         private void ClearReviewForm()
@@ -465,7 +466,7 @@ namespace MovieApp
         private void btnViewAllMovies_Click(object sender, EventArgs e)
         {
             // Display movies
-            UpdateMovieList(movies);
+            UpdateMovieList(Movie.MovieList.Values.ToList());
 
             // Clear filters
             ClearFilterForm();
@@ -481,7 +482,7 @@ namespace MovieApp
             List<Movie> moviesFiltered = new List<Movie>();
 
             // If a filter is enabled, apply it first.
-            moviesFiltered = FilterMovies(movies);
+            moviesFiltered = FilterMovies(Movie.MovieList.Values.ToList());
 
             // Search movies
             moviesFiltered = SearchMovies(moviesFiltered);
