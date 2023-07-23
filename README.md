@@ -74,4 +74,4 @@ This version required a login form. So, test users were created. Passwords for e
     - [x] Logic to add selected movies
     - [x] Display as separate form
 7. Test and refine
-    - [ ] Test the app thoroughly
+    - [x] Test the app thoroughly
