@@ -601,7 +601,6 @@
         private Button btnDeleteMovie;
         private Button btnEditMovie;
         private Button btnAddMovie;
-        private ListBox lstMovies;
         private Button btnCancelMovie;
         private Button btnSaveMovie;
         private Label lblUserRating;
