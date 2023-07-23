@@ -151,7 +151,7 @@ namespace MovieApp
                     btnDeleteMovie.Enabled = true;
 
                     // Get selected movie.
-                    Movie movie = (Movie) lstMovies.SelectedItem;
+                    Movie movie = (Movie)lstMovies.SelectedItem;
 
                     // Display 'No Ratings' if there are no ratings.
                     string rating = "No Ratings";
@@ -237,7 +237,7 @@ namespace MovieApp
                     case "EditMovie":
 
                         // Get selected movie
-                        Movie movie = (Movie) lstMovies.SelectedItem;
+                        Movie movie = (Movie)lstMovies.SelectedItem;
 
                         // Check if the title is changed. The ListBox DisplayMember will need to be updated if so.
                         bool titleChanged = false;
@@ -417,7 +417,7 @@ namespace MovieApp
             if (lstMovies.SelectedItem is not null && currentUser is not null)
             {
                 // Get selected movie
-                Movie movie = (Movie) lstMovies.SelectedItem;
+                Movie movie = (Movie)lstMovies.SelectedItem;
 
                 try
                 {
@@ -425,6 +425,7 @@ namespace MovieApp
                     double rating;
                     double.TryParse(cboUserRating.Text, out rating);
 
+                    // Create new review object.
                     Review review = new Review(currentUser.Username, rating, txtUserReview.Text);
 
                     // Add new review
@@ -438,6 +439,7 @@ namespace MovieApp
                     movie.Rating = movie.Reviews.Average(r => r.Rating);
                     txtAvgRating.Text = movie.Rating.ToString("f1");
 
+                    // Clear form after submitting.
                     ClearReviewForm();
 
                 }
@@ -471,6 +473,7 @@ namespace MovieApp
 
         private void txtSearch_KeyPress(object sender, KeyPressEventArgs e)
         {
+            // If Enter key is pressed, try searching the movie list.
             if (e.KeyChar == (char)Keys.Enter) SearchMovieList();
         }
 
@@ -515,6 +518,7 @@ namespace MovieApp
 
         private void btnViewFavorites_Click(object sender, EventArgs e)
         {
+            // Create a new favorites list form and display it
             FavoritesListForm frmFavorites = new FavoritesListForm();
             frmFavorites.Show();
         }
@@ -523,7 +527,8 @@ namespace MovieApp
         {
             if (lstMovies.SelectedItem is not null && currentUser is not null)
             {
-                currentUser.Favorites.Add((Movie) lstMovies.SelectedItem);
+                // Add the selected item to the favorites list
+                currentUser.Favorites.Add((Movie)lstMovies.SelectedItem);
             }
         }
     }
