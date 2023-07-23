@@ -249,6 +249,7 @@
             btnSaveMovie.UseVisualStyleBackColor = true;
             btnSaveMovie.Visible = false;
             btnSaveMovie.Click += btnSaveMovie_Click;
+            btnSaveMovie.KeyPress += btnSaveMovie_KeyPress;
             // 
             // txtDescription
             // 
