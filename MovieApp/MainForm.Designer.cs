@@ -627,5 +627,6 @@
         private Button btnAddToFavorites;
         private Button btnViewFavorites;
         private ComboBox cboUserRating;
+        internal ListBox lstMovies;
     }
 }

@@ -16,5 +16,12 @@ namespace MovieApp
                 lstFavorites.DisplayMember = "Title";
             }
         }
+
+        private void lstFavorites_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // Change selected item on the main form when a different favorite is selected
+            if (lstFavorites.SelectedItem is not null)
+                Program.mainForm.lstMovies.SelectedItem = lstFavorites.SelectedItem;
+        }
     }
 }

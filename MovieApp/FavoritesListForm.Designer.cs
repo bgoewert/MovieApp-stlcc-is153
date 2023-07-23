@@ -39,6 +39,7 @@
             lstFavorites.Name = "lstFavorites";
             lstFavorites.Size = new Size(310, 139);
             lstFavorites.TabIndex = 0;
+            lstFavorites.SelectedIndexChanged += lstFavorites_SelectedIndexChanged;
             // 
             // FavoritesListForm
             // 
@@ -53,6 +54,6 @@
 
         #endregion
 
-        private ListBox lstFavorites;
+        protected internal ListBox lstFavorites;
     }
 }
