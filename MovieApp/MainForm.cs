@@ -195,7 +195,7 @@ namespace MovieApp
                         btnAddReview.Enabled = false;
                         cboUserRating.Enabled = false;
                         txtUserReview.ReadOnly = true;
-                }
+                    }
                 }
                 else
                 {
@@ -534,6 +534,13 @@ namespace MovieApp
             // These fields are 'protected internal' so we can manipulate them here.
             loginForm.txtUsername.Text = string.Empty;
             loginForm.txtPassword.Text = string.Empty;
+            loginForm.txtUsername.Focus();
+
+            // Clear all main form inputs.
+            ClearFilterForm();
+            ClearMovieForm();
+            ClearReviewForm();
+            lstMovies.SelectedIndex = -1;
 
             // Show login form again.
             loginForm.ShowDialog();
