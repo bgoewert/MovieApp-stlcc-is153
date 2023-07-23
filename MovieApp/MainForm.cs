@@ -9,9 +9,6 @@ namespace MovieApp
          * 
          * Initial movies picked from this list:
          * https://editorial.rottentomatoes.com/guide/essential-movies-to-watch-now/
-         * 
-         * A BindingList was used here because it provides a two-way data-binding for the ListBox data source.
-         * See https://learn.microsoft.com/en-us/dotnet/api/system.componentmodel.bindinglist-1?view=net-7.0#remarks
          */
         List<Movie> movies = new List<Movie> {
             new Movie("12 Angry Men", "Drama", 1957, 95, "Following the closing arguments in a murder trial, the 12 members of the jury must deliberate, with a guilty verdict meaning death for the accused, an inner-city teen. As the dozen men try to reach a unanimous decision while sequestered in a room, one juror (Henry Fonda) casts considerable doubt on elements of the case. Personal issues soon rise to the surface, and conflict threatens to derail the delicate process that will decide one boy's fate."),
@@ -22,33 +19,28 @@ namespace MovieApp
         // Action to perform on save.
         string SaveAction { get; set; }
 
-        LoginForm loginForm = new LoginForm(); // Login form instance, not shown until ShowDialog() is used.
-        User? currentUser;
-        bool loggedIn;
+        // Login form instance, not shown until ShowDialog() is used.
+        private LoginForm loginForm = new LoginForm();
+
+        // Currently logged in user.
+        internal static User? currentUser;
 
         public MainForm()
         {
             InitializeComponent();
 
-            // Add some placeholder reviews.
-            // Reviews are my own or from Roger Ebert. https://www.rogerebert.com/reviews/
+            /* 
+             * Add some placeholder reviews.
+             * 
+             * Reviews are my own or from Roger Ebert.
+             * https://www.rogerebert.com/reviews/
+             */
             movies[0].Reviews.Add(new Review("brennangoewert", 4.6, "I was not angry that I watched this. Very good film."));
             movies[0].Reviews.Add(new Review("rogerebert", 4.2, "In form, \"12 Angry Men\" is a courtroom drama. In purpose, it's a crash course in those passages of the Constitution that promise defendants a fair trial and the presumption of innocence."));
             movies[1].Reviews.Add(new Review("brennangoewert", 5, "The cinematography was mind blowing. They captured the feeling of outer space so well."));
             movies[1].Reviews.Add(new Review("rogerebert", 4.7, "It was e. e. cummings, the poet, who said he'd rather learn from one bird how to sing than teach 10,000 stars how not to dance. I imagine cummings would not have enjoyed Stanley Kubrick's \"2001: A Space Odyssey,\" in which stars dance but birds do not sing."));
             movies[2].Reviews.Add(new Review("brennangoewert", 3.6, "I don't understand French. But, it was very engaging."));
             movies[2].Reviews.Add(new Review("rogerebert", 4.5, "Francois Truffaut's \"The 400 Blows\" (1959) is one of the most intensely touching stories ever made about a young adolescent."));
-
-            // Add event handler for login form close that verifies if the user is logged in.
-            CheckIfLoggedIn();
-
-            // Hide all access controled controls.
-            btnAddMovie.Visible = false;
-            btnEditMovie.Visible = false;
-            btnDeleteMovie.Visible = false;
-            btnRegisterNewUser.Visible = false;
-            btnSaveMovie.Visible = false;
-            btnCancelMovie.Visible = false;
         }
 
         private void MainForm_Shown(object sender, EventArgs e)
@@ -56,6 +48,11 @@ namespace MovieApp
             // Show login form on load
             if (currentUser is null) loginForm.ShowDialog();
 
+            ApplyAccessControl();
+        }
+
+        private void ApplyAccessControl()
+        {
             if (currentUser is not null)
             {
                 txtLoggedInAs.Text = currentUser.Username;
@@ -70,28 +67,17 @@ namespace MovieApp
                     btnSaveMovie.Visible = true;
                     btnCancelMovie.Visible = true;
                 }
+                else
+                {
+                    // Hide all access controled controls.
+                    btnAddMovie.Visible = false;
+                    btnEditMovie.Visible = false;
+                    btnDeleteMovie.Visible = false;
+                    btnRegisterNewUser.Visible = false;
+                    btnSaveMovie.Visible = false;
+                    btnCancelMovie.Visible = false;
+                }
             }
-        }
-
-        private void CheckIfLoggedIn()
-        {
-            loginForm.FormClosing += new FormClosingEventHandler(delegate (object sender, FormClosingEventArgs e)
-            {
-                try
-                {
-                    if (loginForm.loggedIn)
-                    {
-                        currentUser = loginForm.verifiedUser;
-                        loggedIn = loginForm.loggedIn;
-                    }
-                    else throw new Exception("Login Required");
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    e.Cancel = true;
-                }
-            });
         }
 
         private void btnAddMovie_Click(object sender, EventArgs e)
@@ -337,7 +323,7 @@ namespace MovieApp
 
         private void ClearReviewForm()
         {
-            txtUserRating.Text = string.Empty;
+            cboUserRating.SelectedIndex = -1;
             txtUserReview.Text = string.Empty;
         }
 
@@ -435,7 +421,7 @@ namespace MovieApp
                 {
                     // Parse rating
                     double rating;
-                    double.TryParse(txtUserRating.Text, out rating);
+                    double.TryParse(cboUserRating.Text, out rating);
 
                     Review review = new Review(currentUser.Username, rating, txtUserReview.Text);
 
@@ -443,7 +429,7 @@ namespace MovieApp
                     movie.Reviews.Add(review);
 
                     // Add review to list.
-                    txtReviews.Text += "\"" + review.Comment + "\"\r\n" + review.Username + " - " + review.Rating.ToString("f1");
+                    txtReviews.Text += (review.Comment != "" ? "\"" + review.Comment + "\"\r\n" : "") + review.Username + " - " + review.Rating.ToString("f1");
                     txtReviews.Text += "\r\n\r\n";
 
                     // Update new average rating.
@@ -507,16 +493,18 @@ namespace MovieApp
 
         private void btnLogut_Click(object sender, EventArgs e)
         {
-            // Reset logged in status
-            loggedIn = false;
+            // Reset logged in status.
             currentUser = null;
-            loginForm.loggedIn = false;
-            loginForm.verifiedUser = null;
             txtLoggedInAs.Text = string.Empty;
 
-            // Show login form again
+            // Reset login form.
+            loginForm.verifiedUser = null;
+            // These fields are 'protected internal' so we can manipulate them here.
+            loginForm.txtUsername.Text = string.Empty;
+            loginForm.txtPassword.Text = string.Empty;
+
+            // Show login form again.
             loginForm.ShowDialog();
-            CheckIfLoggedIn();
-        }  
+        }
     }
 }

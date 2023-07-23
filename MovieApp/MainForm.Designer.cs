@@ -61,11 +61,11 @@
             lstMovies = new ListBox();
             label1 = new Label();
             panelReviews = new Panel();
+            cboUserRating = new ComboBox();
             txtReviews = new TextBox();
             btnAddReview = new Button();
             txtUserReview = new TextBox();
             lblUserReview = new Label();
-            txtUserRating = new TextBox();
             lblUserRating = new Label();
             label2 = new Label();
             lblLoggedInAs = new Label();
@@ -235,6 +235,7 @@
             btnCancelMovie.TabIndex = 20;
             btnCancelMovie.Text = "Cancel";
             btnCancelMovie.UseVisualStyleBackColor = true;
+            btnCancelMovie.Visible = false;
             btnCancelMovie.Click += btnCancelMovie_Click;
             // 
             // btnSaveMovie
@@ -246,6 +247,7 @@
             btnSaveMovie.TabIndex = 19;
             btnSaveMovie.Text = "Save";
             btnSaveMovie.UseVisualStyleBackColor = true;
+            btnSaveMovie.Visible = false;
             btnSaveMovie.Click += btnSaveMovie_Click;
             // 
             // txtDescription
@@ -362,6 +364,7 @@
             btnDeleteMovie.TabIndex = 5;
             btnDeleteMovie.Text = "Delete";
             btnDeleteMovie.UseVisualStyleBackColor = true;
+            btnDeleteMovie.Visible = false;
             btnDeleteMovie.Click += btnDeleteMovie_Click;
             // 
             // btnEditMovie
@@ -373,6 +376,7 @@
             btnEditMovie.TabIndex = 4;
             btnEditMovie.Text = "Edit";
             btnEditMovie.UseVisualStyleBackColor = true;
+            btnEditMovie.Visible = false;
             btnEditMovie.Click += btnEditMovie_Click;
             // 
             // btnAddMovie
@@ -383,6 +387,7 @@
             btnAddMovie.TabIndex = 3;
             btnAddMovie.Text = "Add New";
             btnAddMovie.UseVisualStyleBackColor = true;
+            btnAddMovie.Visible = false;
             btnAddMovie.Click += btnAddMovie_Click;
             // 
             // lstMovies
@@ -408,17 +413,26 @@
             // panelReviews
             // 
             panelReviews.BorderStyle = BorderStyle.FixedSingle;
+            panelReviews.Controls.Add(cboUserRating);
             panelReviews.Controls.Add(txtReviews);
             panelReviews.Controls.Add(btnAddReview);
             panelReviews.Controls.Add(txtUserReview);
             panelReviews.Controls.Add(lblUserReview);
-            panelReviews.Controls.Add(txtUserRating);
             panelReviews.Controls.Add(lblUserRating);
             panelReviews.Controls.Add(label2);
             panelReviews.Location = new Point(367, 131);
             panelReviews.Name = "panelReviews";
             panelReviews.Size = new Size(329, 588);
             panelReviews.TabIndex = 1;
+            // 
+            // cboUserRating
+            // 
+            cboUserRating.FormattingEnabled = true;
+            cboUserRating.Items.AddRange(new object[] { "1", "2", "3", "4", "5" });
+            cboUserRating.Location = new Point(90, 430);
+            cboUserRating.Name = "cboUserRating";
+            cboUserRating.Size = new Size(50, 23);
+            cboUserRating.TabIndex = 25;
             // 
             // txtReviews
             // 
@@ -435,9 +449,9 @@
             // 
             btnAddReview.Location = new Point(90, 544);
             btnAddReview.Name = "btnAddReview";
-            btnAddReview.Size = new Size(75, 23);
+            btnAddReview.Size = new Size(111, 23);
             btnAddReview.TabIndex = 24;
-            btnAddReview.Text = "Add New";
+            btnAddReview.Text = "Submit Review";
             btnAddReview.UseVisualStyleBackColor = true;
             btnAddReview.Click += btnAddReview_Click;
             // 
@@ -458,13 +472,6 @@
             lblUserReview.Size = new Size(44, 15);
             lblUserReview.TabIndex = 19;
             lblUserReview.Text = "Review";
-            // 
-            // txtUserRating
-            // 
-            txtUserRating.Location = new Point(90, 430);
-            txtUserRating.Name = "txtUserRating";
-            txtUserRating.Size = new Size(100, 23);
-            txtUserRating.TabIndex = 22;
             // 
             // lblUserRating
             // 
@@ -512,6 +519,7 @@
             btnRegisterNewUser.TabIndex = 4;
             btnRegisterNewUser.Text = "Add a New User Account";
             btnRegisterNewUser.UseVisualStyleBackColor = true;
+            btnRegisterNewUser.Visible = false;
             btnRegisterNewUser.Click += btnRegisterNewUser_Click;
             // 
             // btnLogut
@@ -592,7 +600,6 @@
         private ListBox lstMovies;
         private Button btnCancelMovie;
         private Button btnSaveMovie;
-        private TextBox txtUserRating;
         private Label lblUserRating;
         private TextBox txtUserReview;
         private Label lblUserReview;
@@ -616,5 +623,6 @@
         private Button btnLogut;
         private Button btnAddToFavorites;
         private Button button1;
+        private ComboBox cboUserRating;
     }
 }

@@ -123,18 +123,19 @@
             StartPosition = FormStartPosition.CenterParent;
             Text = "Login or Register";
             TopMost = true;
+            FormClosing += LoginForm_FormClosing;
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
         private Label label2;
-        private TextBox txtUsername;
         private Label label3;
         private Button btnLogin;
         private Button btnRegister;
         private Label lblLoginMessage;
         private TextBox txtLoginMessage;
-        private TextBox txtPassword;
+        protected internal TextBox txtUsername;
+        protected internal TextBox txtPassword;
     }
 }

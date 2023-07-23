@@ -12,8 +12,6 @@ namespace MovieApp
 {
     public partial class LoginForm : Form
     {
-
-        internal bool loggedIn = false;
         internal User? verifiedUser;
 
         public LoginForm()
@@ -25,7 +23,7 @@ namespace MovieApp
         {
             try
             {
-                while (!loggedIn && verifiedUser is null)
+                while (verifiedUser is null)
                 {
                     if (txtUsername.Text != "" && txtPassword.Text != "")
                     {
@@ -36,11 +34,7 @@ namespace MovieApp
                             txtLoginMessage.Text = "Username or Password is incorrect. Please login with a valid user or register as a new user.";
                             break;
                         }
-                        else
-                        {
-                            loggedIn = true;
-                            Close();
-                        }
+                        else Close();
                     }
                     else
                     {
@@ -59,10 +53,7 @@ namespace MovieApp
 
 
 
-        private void btnLogin_Click(object sender, EventArgs e)
-        {
-            Login();
-        }
+        private void btnLogin_Click(object sender, EventArgs e) { Login(); }
 
         private void btnRegister_Click(object sender, EventArgs e)
         {
@@ -88,8 +79,23 @@ namespace MovieApp
 
         private void txtPassword_KeyPress(object sender, KeyPressEventArgs e)
         {
-            // If enter is pressed, try logging in.
-            if (e.KeyChar == (char) Keys.Enter) Login();
+            // If Enter is pressed after entering a password, try logging in.
+            if (e.KeyChar == (char)Keys.Enter) Login();
+        }
+
+        private void LoginForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            // Make login a requirement to access the application.
+            try
+            {
+                if (verifiedUser is null) throw new Exception("Login Required");
+                MainForm.currentUser = verifiedUser;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                e.Cancel = true;
+            }
         }
     }
 }
