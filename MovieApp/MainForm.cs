@@ -31,6 +31,11 @@ namespace MovieApp
             Movie.MovieList.Values.ElementAt(1).Reviews.Add(new Review("rogerebert", 4.7, "It was e. e. cummings, the poet, who said he'd rather learn from one bird how to sing than teach 10,000 stars how not to dance. I imagine cummings would not have enjoyed Stanley Kubrick's \"2001: A Space Odyssey,\" in which stars dance but birds do not sing."));
             Movie.MovieList.Values.ElementAt(2).Reviews.Add(new Review("brennangoewert", 3.6, "I don't understand French. But, it was very engaging."));
             Movie.MovieList.Values.ElementAt(2).Reviews.Add(new Review("rogerebert", 4.5, "Francois Truffaut's \"The 400 Blows\" (1959) is one of the most intensely touching stories ever made about a young adolescent."));
+
+            // Recalculate Average Reviews
+            foreach (Movie movie in Movie.MovieList.Values) {
+                movie.Rating = movie.Reviews.Average(r => r.Rating);
+            }
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -157,7 +162,7 @@ namespace MovieApp
                     string rating = "No Ratings";
 
                     // Otherwise, get rating.
-                    if (movie.Rating != 0)
+                    if (movie.Reviews.Count > 0)
                     {
                         rating = movie.Rating.ToString("f1");
                     }
