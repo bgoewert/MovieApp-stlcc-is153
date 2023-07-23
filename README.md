@@ -58,9 +58,9 @@ This version required a login form. So, test users were created. Passwords for e
         - [x] "View All Movies".
           - This button will add the movie titles to the ListBox (lstMovies).
         - [x] "View My Favorites List".
-          - [ ] Opens another form with a ListBox.
+          - [x] Opens another form with a ListBox.
           - [x] "Add Movie to My Favorites List".
-            - [ ] Update the list of movies in the ListBox.
+            - [x] Update the list of movies in the ListBox.
 3. Movie collection
     - [x] Collection (list or array) of movies
     - [x] methods to add new movies
@@ -70,8 +70,8 @@ This version required a login form. So, test users were created. Passwords for e
 5. Search and filter
     - [x] Search/filter buttons
 6. Favorites List
-    - [ ] Handle events for adding to favorites list
-    - [ ] Logic to add selected movies
-    - [ ] Display separately
+    - [x] Handle events for adding to favorites list
+    - [x] Logic to add selected movies
+    - [x] Display as separate form
 7. Test and refine
     - [ ] Test the app thoroughly

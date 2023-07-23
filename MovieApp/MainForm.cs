@@ -5,16 +5,6 @@ namespace MovieApp
 {
     public partial class MainForm : Form
     {
-        /* Storage for movie list.
-         * 
-         * Initial movies picked from this list:
-         * https://editorial.rottentomatoes.com/guide/essential-movies-to-watch-now/
-         */
-        List<Movie> movies = new List<Movie> {
-            new Movie("12 Angry Men", "Drama", 1957, 95, "Following the closing arguments in a murder trial, the 12 members of the jury must deliberate, with a guilty verdict meaning death for the accused, an inner-city teen. As the dozen men try to reach a unanimous decision while sequestered in a room, one juror (Henry Fonda) casts considerable doubt on elements of the case. Personal issues soon rise to the surface, and conflict threatens to derail the delicate process that will decide one boy's fate."),
-            new Movie("2001: A Space Odyssey", "Sci-Fi", 1968, 139, "An imposing black structure provides a connection between the past and the future in this enigmatic adaptation of a short story by revered sci-fi author Arthur C. Clarke. When Dr. Dave Bowman (Keir Dullea) and other astronauts are sent on a mysterious mission, their ship's computer system, HAL, begins to display increasingly strange behavior, leading up to a tense showdown between man and machine that results in a mind-bending trek through space and time."),
-            new Movie("The 400 Blows", "Crime/Drama", 1959, 93, "For young Parisian boy Antoine Doinel (Jean-Pierre Léaud), life is one difficult situation after another. Surrounded by inconsiderate adults, including his neglectful parents (Claire Maurier, Albert Remy), Antoine spends his days with his best friend, Rene (Patrick Auffray), trying to plan for a better life. When one of their schemes goes awry, Antoine ends up in trouble with the law, leading to even more conflicts with unsympathetic authority figures.")
-        };
 
         // Action to perform on save.
         string SaveAction { get; set; }
@@ -120,15 +110,6 @@ namespace MovieApp
             // Set save action.
             SaveAction = "EditMovie";
 
-            try
-            {
-
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-
             // Enable inputs.
             txtTitle.ReadOnly = false;
             txtGenre.ReadOnly = false;
@@ -137,13 +118,19 @@ namespace MovieApp
             txtDescription.ReadOnly = false;
             btnSaveMovie.Enabled = true;
             btnCancelMovie.Enabled = true;
+
+            // Change focus to first input.
+            txtTitle.Focus();
         }
 
         private void btnDeleteMovie_Click(object sender, EventArgs e)
         {
             // Remove selected movie from collection.
             if (lstMovies.SelectedItem is not null)
-                Movie.MovieList.Remove(lstMovies.SelectedItem.ToString());
+            {
+                Movie.MovieList.Remove(((Movie)lstMovies.SelectedItem).Title);
+                UpdateMovieList(Movie.MovieList.Values.ToList());
+            }
         }
 
         private void btnCancelMovie_Click(object sender, EventArgs e)
@@ -164,7 +151,7 @@ namespace MovieApp
                     btnDeleteMovie.Enabled = true;
 
                     // Get selected movie.
-                    Movie movie = (Movie)lstMovies.SelectedItem;
+                    Movie movie = (Movie) lstMovies.SelectedItem;
 
                     // Display 'No Ratings' if there are no ratings.
                     string rating = "No Ratings";
@@ -240,7 +227,7 @@ namespace MovieApp
                     case "EditMovie":
 
                         // Get selected movie
-                        Movie movie = (Movie)lstMovies.SelectedItem;
+                        Movie movie = (Movie) lstMovies.SelectedItem;
 
                         // Check if the title is changed. The ListBox DisplayMember will need to be updated if so.
                         bool titleChanged = false;
@@ -420,7 +407,7 @@ namespace MovieApp
             if (lstMovies.SelectedItem is not null && currentUser is not null)
             {
                 // Get selected movie
-                Movie movie = (Movie)lstMovies.SelectedItem;
+                Movie movie = (Movie) lstMovies.SelectedItem;
 
                 try
                 {
@@ -514,6 +501,20 @@ namespace MovieApp
 
             // Show login form again.
             loginForm.ShowDialog();
+        }
+
+        private void btnViewFavorites_Click(object sender, EventArgs e)
+        {
+            FavoritesListForm frmFavorites = new FavoritesListForm();
+            frmFavorites.Show();
+        }
+
+        private void btnAddToFavorites_Click(object sender, EventArgs e)
+        {
+            if (lstMovies.SelectedItem is not null && currentUser is not null)
+            {
+                currentUser.Favorites.Add((Movie) lstMovies.SelectedItem);
+            }
         }
     }
 }

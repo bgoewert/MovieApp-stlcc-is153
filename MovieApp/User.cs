@@ -12,7 +12,8 @@ namespace MovieApp
 
 
         /*
-         * Define the favorites list
+         * Define the favorites list.
+         * This only stores the movie title, which can then later be used to reference a key from the MovieList if needed.
          */
         private readonly List<Movie> listFavorites = new List<Movie>();
         public List<Movie> Favorites { get => listFavorites; }

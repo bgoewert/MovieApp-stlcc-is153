@@ -73,7 +73,7 @@
             btnRegisterNewUser = new Button();
             btnLogut = new Button();
             btnAddToFavorites = new Button();
-            button1 = new Button();
+            btnViewFavorites = new Button();
             panelMovies.SuspendLayout();
             grpFilter.SuspendLayout();
             panelReviews.SuspendLayout();
@@ -540,22 +540,24 @@
             btnAddToFavorites.TabIndex = 21;
             btnAddToFavorites.Text = "Add Movie to My Favorites List";
             btnAddToFavorites.UseVisualStyleBackColor = true;
+            btnAddToFavorites.Click += btnAddToFavorites_Click;
             // 
-            // button1
+            // btnViewFavorites
             // 
-            button1.Location = new Point(367, 60);
-            button1.Name = "button1";
-            button1.Size = new Size(242, 23);
-            button1.TabIndex = 22;
-            button1.Text = "View My Favorites List";
-            button1.UseVisualStyleBackColor = true;
+            btnViewFavorites.Location = new Point(367, 60);
+            btnViewFavorites.Name = "btnViewFavorites";
+            btnViewFavorites.Size = new Size(242, 23);
+            btnViewFavorites.TabIndex = 22;
+            btnViewFavorites.Text = "View My Favorites List";
+            btnViewFavorites.UseVisualStyleBackColor = true;
+            btnViewFavorites.Click += btnViewFavorites_Click;
             // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(708, 731);
-            Controls.Add(button1);
+            Controls.Add(btnViewFavorites);
             Controls.Add(btnAddToFavorites);
             Controls.Add(btnLogut);
             Controls.Add(btnRegisterNewUser);
@@ -565,6 +567,7 @@
             Controls.Add(panelMovies);
             Name = "MainForm";
             Text = "Movie Application";
+            Load += MainForm_Load;
             Shown += MainForm_Shown;
             panelMovies.ResumeLayout(false);
             panelMovies.PerformLayout();
@@ -622,7 +625,7 @@
         private Button btnViewAllMovies;
         private Button btnLogut;
         private Button btnAddToFavorites;
-        private Button button1;
+        private Button btnViewFavorites;
         private ComboBox cboUserRating;
     }
 }
