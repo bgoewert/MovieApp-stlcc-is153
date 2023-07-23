@@ -48,9 +48,9 @@ This version required a login form. So, test users were created. Passwords for e
     - [x] After login, close and show menu form.
 2. Menu Form.
     - [x] ListBox (lstMovies).
-    - [ ] Movie management.
-      - Fields to view, create, and update movie details.
-      - ComboBox for movie rating 1-5.
+    - Movie management.
+      - [x] Fields to view, create, and update movie details.
+      - [x] ComboBox for movie rating 1-5.
       - Button actions.
         - [x] "Add a Movie" (admin).
         - [x] "Update/Edit Existing Movie" (admin).
