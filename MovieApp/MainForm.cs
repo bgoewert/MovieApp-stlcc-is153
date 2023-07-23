@@ -195,7 +195,17 @@ namespace MovieApp
             }
         }
 
-        private void btnSaveMovie_Click(object sender, EventArgs e)
+        private void btnSaveMovie_Click(object sender, EventArgs e) { SaveMovie(); }
+
+        private void btnSaveMovie_KeyPress(object sender, KeyPressEventArgs e) {
+
+            // Attempt to save movie if either the Enter or Spacebar is pressed.
+            if (e.KeyChar == (char) Keys.Enter || e.KeyChar == (char) Keys.Space)
+                SaveMovie();
+
+        }
+
+        private void SaveMovie()
         {
             int duration, releaseYear;
 
