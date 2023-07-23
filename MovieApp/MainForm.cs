@@ -19,7 +19,7 @@ namespace MovieApp
         // Action to perform on save.
         string SaveAction { get; set; }
 
-        // Login form instance, not shown until ShowDialog() is used.
+        // Login form instance, not yet displayed.
         private LoginForm loginForm = new LoginForm();
 
         // Currently logged in user.
@@ -51,7 +51,7 @@ namespace MovieApp
 
         private void MainForm_Shown(object sender, EventArgs e)
         {
-            // Show login form on load
+            // Show LoginForm as a dialog box after MainForm is displayed.
             if (currentUser is null) loginForm.ShowDialog();
         }
 
@@ -492,7 +492,10 @@ namespace MovieApp
 
         private void btnRegisterNewUser_Click(object sender, EventArgs e)
         {
+            // Create a new registration form instance.
             UserRegistrationForm registrationForm = new UserRegistrationForm();
+
+            // Show the registration form as a dialog box.
             registrationForm.ShowDialog();
         }
 
