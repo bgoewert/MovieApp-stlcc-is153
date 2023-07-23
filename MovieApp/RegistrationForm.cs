@@ -70,7 +70,7 @@ namespace MovieApp
             if (registered)
             {
                 // Display a success message with the user's username.
-                MessageBox.Show($"New user account added succesfully. \n\nNew User: {User.UserList.Last().Username}");
+                MessageBox.Show($"New user account added successfully. \n\nNew User: {User.UserList.Last().Username}");
             }
         }
     }

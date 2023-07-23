@@ -68,7 +68,7 @@ namespace MovieApp
                     if (registrationForm.registered)
                     {
                         txtLoginMessage.ForeColor = Color.DarkGreen;
-                        txtLoginMessage.Text = "Registration succesfull. Please login using your new username and password.";
+                        txtLoginMessage.Text = "Registration successful. Please login using your new username and password.";
                     }
 
                 });
