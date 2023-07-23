@@ -25,12 +25,12 @@ namespace MovieApp
              * Reviews are my own or from Roger Ebert.
              * https://www.rogerebert.com/reviews/
              */
-            Movie.MovieList.Values.ElementAt(0).Reviews.Add(new Review("brennangoewert", 4.6, "I was not angry that I watched this. Very good film."));
-            Movie.MovieList.Values.ElementAt(0).Reviews.Add(new Review("rogerebert", 4.2, "In form, \"12 Angry Men\" is a courtroom drama. In purpose, it's a crash course in those passages of the Constitution that promise defendants a fair trial and the presumption of innocence."));
+            Movie.MovieList.Values.ElementAt(0).Reviews.Add(new Review("brennangoewert", 5, "I was not angry that I watched this. Very good film."));
+            Movie.MovieList.Values.ElementAt(0).Reviews.Add(new Review("rogerebert", 4, "In form, \"12 Angry Men\" is a courtroom drama. In purpose, it's a crash course in those passages of the Constitution that promise defendants a fair trial and the presumption of innocence."));
             Movie.MovieList.Values.ElementAt(1).Reviews.Add(new Review("brennangoewert", 5, "The cinematography was mind blowing. They captured the feeling of outer space so well."));
-            Movie.MovieList.Values.ElementAt(1).Reviews.Add(new Review("rogerebert", 4.7, "It was e. e. cummings, the poet, who said he'd rather learn from one bird how to sing than teach 10,000 stars how not to dance. I imagine cummings would not have enjoyed Stanley Kubrick's \"2001: A Space Odyssey,\" in which stars dance but birds do not sing."));
-            Movie.MovieList.Values.ElementAt(2).Reviews.Add(new Review("brennangoewert", 3.6, "I don't understand French. But, it was very engaging."));
-            Movie.MovieList.Values.ElementAt(2).Reviews.Add(new Review("rogerebert", 4.5, "Francois Truffaut's \"The 400 Blows\" (1959) is one of the most intensely touching stories ever made about a young adolescent."));
+            Movie.MovieList.Values.ElementAt(1).Reviews.Add(new Review("rogerebert", 5, "It was e. e. cummings, the poet, who said he'd rather learn from one bird how to sing than teach 10,000 stars how not to dance. I imagine cummings would not have enjoyed Stanley Kubrick's \"2001: A Space Odyssey,\" in which stars dance but birds do not sing."));
+            Movie.MovieList.Values.ElementAt(2).Reviews.Add(new Review("brennangoewert", 4, "I don't understand French. But, it was very engaging with subtitles."));
+            Movie.MovieList.Values.ElementAt(2).Reviews.Add(new Review("rogerebert", 4, "Francois Truffaut's \"The 400 Blows\" (1959) is one of the most intensely touching stories ever made about a young adolescent."));
 
             // Recalculate Average Reviews
             foreach (Movie movie in Movie.MovieList.Values) {
