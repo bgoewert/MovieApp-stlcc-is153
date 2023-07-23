@@ -149,7 +149,7 @@ namespace MovieApp
             try
             {
                 // If there is a movie selected.
-                if (lstMovies.SelectedIndex >= 0)
+                if (lstMovies.SelectedIndex != -1 && currentUser is not null)
                 {
                     // Enable edit/delete buttons
                     btnEditMovie.Enabled = true;
@@ -184,6 +184,18 @@ namespace MovieApp
                         txtReviews.Text += "\"" + movie.Reviews[i].Comment + "\"\r\n" + movie.Reviews[i].Username + " - " + movie.Reviews[i].Rating.ToString("f1");
                         txtReviews.Text += "\r\n\r\n";
                     }
+
+                    // Check if user has reviewed already
+                    Review userReview = movie.Reviews.Find(r => r.Username == currentUser.Username);
+                    if (movie.Reviews.FindIndex(r => r.Username == currentUser.Username) != -1)
+                    {
+                        // If review was found, disable and populate inputs
+                        cboUserRating.SelectedIndex = userReview.Rating - 1;
+                        txtUserReview.Text = userReview.Comment;
+                        btnAddReview.Enabled = false;
+                        cboUserRating.Enabled = false;
+                        txtUserReview.ReadOnly = true;
+                }
                 }
                 else
                 {
@@ -433,8 +445,8 @@ namespace MovieApp
                 try
                 {
                     // Parse rating
-                    double rating;
-                    double.TryParse(cboUserRating.Text, out rating);
+                    int rating;
+                    int.TryParse(cboUserRating.Text, out rating);
 
                     // Create new review object.
                     Review review = new Review(currentUser.Username, rating, txtUserReview.Text);

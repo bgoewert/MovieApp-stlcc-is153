@@ -80,4 +80,5 @@ This version required a login form. So, test users were created. Passwords for e
 
 - Check if movie was already added.
 - Check if user already exists.
+- Check if user review already exists and populate read only inputs based on selected movie.
 - Logut button so that you can switch users without needing to re-run the application.
