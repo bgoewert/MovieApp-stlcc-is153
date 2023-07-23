@@ -517,6 +517,6 @@ namespace MovieApp
             // Show login form again
             loginForm.ShowDialog();
             CheckIfLoggedIn();
-        }
+        }  
     }
 }

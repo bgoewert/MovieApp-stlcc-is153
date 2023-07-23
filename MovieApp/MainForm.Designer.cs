@@ -72,6 +72,8 @@
             txtLoggedInAs = new TextBox();
             btnRegisterNewUser = new Button();
             btnLogut = new Button();
+            btnAddToFavorites = new Button();
+            button1 = new Button();
             panelMovies.SuspendLayout();
             grpFilter.SuspendLayout();
             panelReviews.SuspendLayout();
@@ -103,9 +105,9 @@
             panelMovies.Controls.Add(btnAddMovie);
             panelMovies.Controls.Add(lstMovies);
             panelMovies.Controls.Add(label1);
-            panelMovies.Location = new Point(12, 51);
+            panelMovies.Location = new Point(12, 12);
             panelMovies.Name = "panelMovies";
-            panelMovies.Size = new Size(337, 668);
+            panelMovies.Size = new Size(337, 707);
             panelMovies.TabIndex = 0;
             // 
             // btnViewAllMovies
@@ -227,7 +229,7 @@
             // btnCancelMovie
             // 
             btnCancelMovie.Enabled = false;
-            btnCancelMovie.Location = new Point(102, 626);
+            btnCancelMovie.Location = new Point(102, 662);
             btnCancelMovie.Name = "btnCancelMovie";
             btnCancelMovie.Size = new Size(75, 23);
             btnCancelMovie.TabIndex = 20;
@@ -238,7 +240,7 @@
             // btnSaveMovie
             // 
             btnSaveMovie.Enabled = false;
-            btnSaveMovie.Location = new Point(21, 626);
+            btnSaveMovie.Location = new Point(21, 662);
             btnSaveMovie.Name = "btnSaveMovie";
             btnSaveMovie.Size = new Size(75, 23);
             btnSaveMovie.TabIndex = 19;
@@ -248,18 +250,18 @@
             // 
             // txtDescription
             // 
-            txtDescription.Location = new Point(21, 489);
+            txtDescription.Location = new Point(21, 490);
             txtDescription.Multiline = true;
             txtDescription.Name = "txtDescription";
             txtDescription.ReadOnly = true;
             txtDescription.ScrollBars = ScrollBars.Vertical;
-            txtDescription.Size = new Size(294, 131);
+            txtDescription.Size = new Size(294, 166);
             txtDescription.TabIndex = 18;
             // 
             // lblDescription
             // 
             lblDescription.AutoSize = true;
-            lblDescription.Location = new Point(21, 471);
+            lblDescription.Location = new Point(21, 472);
             lblDescription.Name = "lblDescription";
             lblDescription.Size = new Size(67, 15);
             lblDescription.TabIndex = 15;
@@ -413,25 +415,25 @@
             panelReviews.Controls.Add(txtUserRating);
             panelReviews.Controls.Add(lblUserRating);
             panelReviews.Controls.Add(label2);
-            panelReviews.Location = new Point(367, 51);
+            panelReviews.Location = new Point(367, 131);
             panelReviews.Name = "panelReviews";
-            panelReviews.Size = new Size(329, 668);
+            panelReviews.Size = new Size(329, 588);
             panelReviews.TabIndex = 1;
             // 
             // txtReviews
             // 
-            txtReviews.Location = new Point(17, 47);
+            txtReviews.Location = new Point(17, 37);
             txtReviews.Multiline = true;
             txtReviews.Name = "txtReviews";
             txtReviews.ReadOnly = true;
             txtReviews.ScrollBars = ScrollBars.Vertical;
-            txtReviews.Size = new Size(294, 458);
+            txtReviews.Size = new Size(294, 387);
             txtReviews.TabIndex = 0;
             txtReviews.TabStop = false;
             // 
             // btnAddReview
             // 
-            btnAddReview.Location = new Point(90, 625);
+            btnAddReview.Location = new Point(90, 544);
             btnAddReview.Name = "btnAddReview";
             btnAddReview.Size = new Size(75, 23);
             btnAddReview.TabIndex = 24;
@@ -441,7 +443,7 @@
             // 
             // txtUserReview
             // 
-            txtUserReview.Location = new Point(90, 540);
+            txtUserReview.Location = new Point(90, 459);
             txtUserReview.Multiline = true;
             txtUserReview.Name = "txtUserReview";
             txtUserReview.ScrollBars = ScrollBars.Vertical;
@@ -451,7 +453,7 @@
             // lblUserReview
             // 
             lblUserReview.AutoSize = true;
-            lblUserReview.Location = new Point(17, 543);
+            lblUserReview.Location = new Point(17, 462);
             lblUserReview.Name = "lblUserReview";
             lblUserReview.Size = new Size(44, 15);
             lblUserReview.TabIndex = 19;
@@ -459,7 +461,7 @@
             // 
             // txtUserRating
             // 
-            txtUserRating.Location = new Point(90, 511);
+            txtUserRating.Location = new Point(90, 430);
             txtUserRating.Name = "txtUserRating";
             txtUserRating.Size = new Size(100, 23);
             txtUserRating.TabIndex = 22;
@@ -467,7 +469,7 @@
             // lblUserRating
             // 
             lblUserRating.AutoSize = true;
-            lblUserRating.Location = new Point(17, 514);
+            lblUserRating.Location = new Point(17, 433);
             lblUserRating.Name = "lblUserRating";
             lblUserRating.Size = new Size(41, 15);
             lblUserRating.TabIndex = 5;
@@ -486,7 +488,7 @@
             // lblLoggedInAs
             // 
             lblLoggedInAs.AutoSize = true;
-            lblLoggedInAs.Location = new Point(15, 9);
+            lblLoggedInAs.Location = new Point(367, 12);
             lblLoggedInAs.Name = "lblLoggedInAs";
             lblLoggedInAs.Size = new Size(63, 15);
             lblLoggedInAs.TabIndex = 2;
@@ -496,7 +498,7 @@
             // 
             txtLoggedInAs.BackColor = SystemColors.Control;
             txtLoggedInAs.BorderStyle = BorderStyle.None;
-            txtLoggedInAs.Location = new Point(84, 9);
+            txtLoggedInAs.Location = new Point(436, 12);
             txtLoggedInAs.Name = "txtLoggedInAs";
             txtLoggedInAs.ReadOnly = true;
             txtLoggedInAs.Size = new Size(265, 16);
@@ -504,7 +506,7 @@
             // 
             // btnRegisterNewUser
             // 
-            btnRegisterNewUser.Location = new Point(100, 27);
+            btnRegisterNewUser.Location = new Point(452, 30);
             btnRegisterNewUser.Name = "btnRegisterNewUser";
             btnRegisterNewUser.Size = new Size(157, 23);
             btnRegisterNewUser.TabIndex = 4;
@@ -514,7 +516,7 @@
             // 
             // btnLogut
             // 
-            btnLogut.Location = new Point(15, 27);
+            btnLogut.Location = new Point(367, 30);
             btnLogut.Name = "btnLogut";
             btnLogut.Size = new Size(79, 23);
             btnLogut.TabIndex = 4;
@@ -522,11 +524,31 @@
             btnLogut.UseVisualStyleBackColor = true;
             btnLogut.Click += btnLogut_Click;
             // 
+            // btnAddToFavorites
+            // 
+            btnAddToFavorites.Location = new Point(367, 89);
+            btnAddToFavorites.Name = "btnAddToFavorites";
+            btnAddToFavorites.Size = new Size(242, 23);
+            btnAddToFavorites.TabIndex = 21;
+            btnAddToFavorites.Text = "Add Movie to My Favorites List";
+            btnAddToFavorites.UseVisualStyleBackColor = true;
+            // 
+            // button1
+            // 
+            button1.Location = new Point(367, 60);
+            button1.Name = "button1";
+            button1.Size = new Size(242, 23);
+            button1.TabIndex = 22;
+            button1.Text = "View My Favorites List";
+            button1.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(708, 731);
+            Controls.Add(button1);
+            Controls.Add(btnAddToFavorites);
             Controls.Add(btnLogut);
             Controls.Add(btnRegisterNewUser);
             Controls.Add(txtLoggedInAs);
@@ -592,5 +614,7 @@
         private Button btnRegisterNewUser;
         private Button btnViewAllMovies;
         private Button btnLogut;
+        private Button btnAddToFavorites;
+        private Button button1;
     }
 }
