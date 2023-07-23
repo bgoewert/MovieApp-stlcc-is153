@@ -24,7 +24,7 @@ namespace MovieApp
                  */
                 if (value < 1832 || value > DateTime.Now.Year)
                 {
-                    throw new Exception("Year given is invalid. Please enter a valid year.");
+                    throw new Exception($"Year given is invalid. Please enter a valid year between 1832 or {DateTime.Now.Year}.");
                 } else
                 {
                     releaseYear = value;
