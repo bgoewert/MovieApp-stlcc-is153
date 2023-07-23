@@ -37,7 +37,7 @@ namespace MovieApp
                         }
                         else
                         {
-                            UserList.Users.Add(new User(txtUsername.Text, txtPassword.Text));
+                            User.UserList.Add(new User(txtUsername.Text, txtPassword.Text));
                             registered = true;
                             Close();
                         }
@@ -70,7 +70,7 @@ namespace MovieApp
             if (registered)
             {
                 // Display a success message with the user's username.
-                MessageBox.Show($"New user account added succesfully. \n\nNew User: {UserList.Users.Last().Username}");
+                MessageBox.Show($"New user account added succesfully. \n\nNew User: {User.UserList.Last().Username}");
             }
         }
     }

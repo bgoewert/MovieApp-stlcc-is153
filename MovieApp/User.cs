@@ -10,8 +10,21 @@ namespace MovieApp
         public string Username { get; set; }
         public string Password { get; set; }
 
+
+        /*
+         * Define the favorites list
+         */
         private readonly List<Movie> listFavorites = new List<Movie>();
         public List<Movie> Favorites { get => listFavorites; }
+
+        /*
+         * Define the user list.
+         */
+        private static List<User> userList = new List<User>() {
+            new User("admin", "admin"),
+            new User("test", "test")
+        };
+        internal static List<User> UserList { get => userList; }
 
         public User(string username, string password) {
             Username = username;
@@ -20,12 +33,12 @@ namespace MovieApp
 
         public static User? Login(string username, string password)
         {
-            return UserList.Users.FirstOrDefault(user => (user.Username == username && user.Password == password));
+            return UserList.FirstOrDefault(user => (user.Username == username && user.Password == password));
         }
 
         public static bool VerifyUsername(string username)
         {
-            if (UserList.Users.Any(user => user.Username == username))
+            if (UserList.Any(user => user.Username == username))
             {
                 return true;
             }
@@ -37,7 +50,7 @@ namespace MovieApp
 
         public static bool VerifyPassword(string password)
         {
-            if (UserList.Users.Any(user => user.Password == password))
+            if (UserList.Any(user => user.Password == password))
             {
                 return true;
             }
@@ -46,15 +59,5 @@ namespace MovieApp
                 return false;
             }
         }
-    }
-
-    internal static class UserList
-    {
-        private static List<User> userList = new List<User>() {
-            new User("admin", "admin"),
-            new User("test", "test")
-        };
-
-        public static List<User> Users { get => userList; }
     }
 }
