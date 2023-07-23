@@ -78,5 +78,6 @@ This version required a login form. So, test users were created. Passwords for e
 
 #### Not Defined but added for usability
 
+- Check if movie was already added.
 - Check if user already exists.
 - Logut button so that you can switch users without needing to re-run the application.

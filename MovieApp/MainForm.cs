@@ -226,14 +226,20 @@ namespace MovieApp
                 {
                     case "AddMovie":
 
-                        // Add new movie to list.
-                        Movie.MovieList.Add(txtTitle.Text, new Movie(
+                        // Create new movie object.
+                        Movie newMovie = new Movie(
                             txtTitle.Text,
                             txtGenre.Text,
                             releaseYear,
                             duration,
                             txtDescription.Text
-                        ));
+                        );
+
+                        // Check to see if movie does not already exist.
+                        if (Movie.MovieList.ContainsKey(newMovie.Title)) throw new Exception("Movie already exists.");
+
+                        // Add new movie to list.
+                        Movie.MovieList.Add(newMovie.Title, newMovie);
                         UpdateMovieList(Movie.MovieList.Values.ToList()); // Update movie list with new movie
                         lstMovies.SelectedItem = Movie.MovieList.Values.Last(); // Select the new movie
                         lstMovies.Focus(); // Change focus to the movie list
