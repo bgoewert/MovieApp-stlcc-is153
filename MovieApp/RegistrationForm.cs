@@ -23,7 +23,6 @@ namespace MovieApp
         {
             try
             {
-                // TODO: Check if user is not already registered.
                 // If not registered, add new user.
                 if (!registered)
                 {
@@ -37,8 +36,19 @@ namespace MovieApp
                         }
                         else
                         {
-                            User.UserList.Add(new User(txtUsername.Text, txtPassword.Text));
+                            // Create new user object.
+                            User newUser = new User(txtUsername.Text, txtPassword.Text);
+
+                            // Check to see of the user already exists.
+                            if (User.UserList.FindIndex(0,u => u.Username.ToLower() == newUser.Username.ToLower()) >= 0) throw new Exception("User already exists.");
+
+                            // If not already existing, add the new user.
+                            User.UserList.Add(newUser);
+                            
+                            // Update registration status.
                             registered = true;
+
+                            // Close the registration form.
                             Close();
                         }
                     }
@@ -51,7 +61,7 @@ namespace MovieApp
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Error");
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

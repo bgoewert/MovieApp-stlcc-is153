@@ -75,3 +75,8 @@ This version required a login form. So, test users were created. Passwords for e
     - [x] Display as separate form
 7. Test and refine
     - [x] Test the app thoroughly
+
+#### Not Defined but added for usability
+
+- Check if user already exists.
+- Logut button so that you can switch users without needing to re-run the application.
