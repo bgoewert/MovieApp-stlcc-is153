@@ -33,11 +33,12 @@
             // 
             // lstFavorites
             // 
+            lstFavorites.Dock = DockStyle.Fill;
             lstFavorites.FormattingEnabled = true;
             lstFavorites.ItemHeight = 15;
-            lstFavorites.Location = new Point(12, 12);
+            lstFavorites.Location = new Point(0, 0);
             lstFavorites.Name = "lstFavorites";
-            lstFavorites.Size = new Size(310, 139);
+            lstFavorites.Size = new Size(334, 161);
             lstFavorites.TabIndex = 0;
             lstFavorites.SelectedIndexChanged += lstFavorites_SelectedIndexChanged;
             // 
