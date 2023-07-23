@@ -432,7 +432,8 @@ namespace MovieApp
                     txtReviews.Text += (review.Comment != "" ? "\"" + review.Comment + "\"\r\n" : "") + review.Username + " - " + review.Rating.ToString("f1");
                     txtReviews.Text += "\r\n\r\n";
 
-                    // Update new average rating.
+                    // Update new average rating
+                    movie.Rating = movie.Reviews.Average(r => r.Rating);
                     txtAvgRating.Text = movie.Rating.ToString("f1");
 
                     ClearReviewForm();

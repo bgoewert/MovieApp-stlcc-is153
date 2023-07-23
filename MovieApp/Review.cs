@@ -1,7 +1,7 @@
 ﻿
 namespace MovieApp
 {
-    internal class Review
+    internal struct Review
     {
         public string Username { get; set; }
         public double Rating { get; set; }

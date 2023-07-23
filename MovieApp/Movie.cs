@@ -1,7 +1,6 @@
 ﻿
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using System.ComponentModel;
 
 namespace MovieApp
 {
@@ -18,9 +17,11 @@ namespace MovieApp
         public int ReleaseYear {
             get { return releaseYear; }
             set {
-                // Check if given year is outside a valid range.
-                // Cannot be after current year.
-                // Cannot be before the history of motion pictures. https://www.britannica.com/art/history-of-the-motion-picture
+                /*
+                 * Check if given year is outside a valid range.
+                 * Cannot be after current year or be before the history of motion pictures.
+                 * https://www.britannica.com/art/history-of-the-motion-picture
+                 */
                 if (value < 1832 || value > DateTime.Now.Year)
                 {
                     throw new Exception("Year given is invalid. Please enter a valid year.");
@@ -40,7 +41,7 @@ namespace MovieApp
         public string Description { get; set; }
 
         // Storage for all the reviews related to a movie.
-        public ObservableCollection<Review> Reviews { get; set; } = new ObservableCollection<Review>();
+        public List<Review> Reviews { get; set; } = new List<Review>();
 
         public Movie( string title, string genre, int releaseYear, int duration, string description )
         {
@@ -49,18 +50,6 @@ namespace MovieApp
             ReleaseYear = releaseYear;
             Duration = duration;
             Description = description;
-
-            // Update average rating after a review has been added.
-            // https://learn.microsoft.com/en-us/dotnet/api/system.componentmodel.bindinglist-1.listchanged?view=net-7.0
-            Reviews.CollectionChanged += Reviews_ListChanged;
         }
-
-        private void Reviews_ListChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            // Get the average rating.
-            // https://learn.microsoft.com/en-us/dotnet/api/system.linq.enumerable.average?view=net-7.0
-            Rating = Reviews.Average(r => r.Rating);
-        }
-
     }
 }
