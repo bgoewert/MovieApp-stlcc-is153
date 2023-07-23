@@ -115,6 +115,7 @@
             Controls.Add(label3);
             Controls.Add(txtUsername);
             Controls.Add(label2);
+            FormBorderStyle = FormBorderStyle.FixedDialog;
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "LoginForm";
