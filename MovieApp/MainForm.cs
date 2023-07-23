@@ -220,7 +220,7 @@ namespace MovieApp
                             txtDescription.Text
                         ));
                         UpdateMovieList(Movie.MovieList.Values.ToList()); // Update movie list with new movie
-                        lstMovies.SelectedItem = Movie.MovieList.Last(); // Select the new movie
+                        lstMovies.SelectedItem = Movie.MovieList.Values.Last(); // Select the new movie
                         lstMovies.Focus(); // Change focus to the movie list
                         break;
 
