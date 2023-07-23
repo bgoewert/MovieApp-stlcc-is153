@@ -352,29 +352,29 @@ namespace MovieApp
                 // Get filter values.
                 int yearMin, yearMax;
                 double ratingMin, ratingMax;
-                //bool boolYearMin = Int32.TryParse(txtFilterYearMin.Text, out yearMin);
-                //bool boolYearMax = Int32.TryParse(txtFilterYearMax.Text, out yearMax);
-                //bool boolRatingMin= double.TryParse(txtFilterRatingMin.Text, out ratingMin);
-                //bool boolRatingMax = double.TryParse(txtFilterRatingMax.Text, out ratingMax);
+                bool boolYearMin = Int32.TryParse(txtFilterYearMin.Text, out yearMin);
+                bool boolYearMax = Int32.TryParse(txtFilterYearMax.Text, out yearMax);
+                bool boolRatingMin = double.TryParse(txtFilterRatingMin.Text, out ratingMin);
+                bool boolRatingMax = double.TryParse(txtFilterRatingMax.Text, out ratingMax);
 
-                // Check if filter values are invalid.
-                if (!Int32.TryParse(txtFilterYearMin.Text, out yearMin) && txtFilterYearMin.Text != string.Empty)
+                // Check if filter values are invalid and if so return original list.
+                if (!boolYearMin && txtFilterYearMin.Text != string.Empty)
                 {
                     MessageBox.Show("Invalid Filter Value. Please enter a valid minumum Release Year.");
                     return moviesToFilter;
                 }
-                if (!Int32.TryParse(txtFilterYearMax.Text, out yearMax) && txtFilterYearMax.Text != string.Empty)
+                if (!boolYearMax && txtFilterYearMax.Text != string.Empty)
                 {
                     MessageBox.Show("Invalid Filter Value. Please enter a valid maximum Release Year.");
                     return moviesToFilter;
                 }
 
-                if (!double.TryParse(txtFilterRatingMin.Text, out ratingMin) && txtFilterRatingMin.Text != string.Empty)
+                if (!boolRatingMin && txtFilterRatingMin.Text != string.Empty)
                 {
                     MessageBox.Show("Invalid Filter Value. Please enter a valid minimum Rating.");
                     return moviesToFilter;
                 }
-                if (!double.TryParse(txtFilterRatingMax.Text, out ratingMax) && txtFilterRatingMax.Text != string.Empty)
+                if (!boolRatingMax && txtFilterRatingMax.Text != string.Empty)
                 {
                     MessageBox.Show("Invalid Filter Value. Please enter a valid maximum Rating.");
                     return moviesToFilter;
